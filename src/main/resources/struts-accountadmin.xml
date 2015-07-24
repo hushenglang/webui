@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+	<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+	<struts>
+		<package name="default" namespace="/" extends="struts-default">
+		<default-action-ref name="notFound" />
+		
+		<global-results>
+	    	<result name="login">index.html</result>
+	    	<result name="createImg">/jsp/webui/rand.jsp</result>
+	    	<result name="download" type="stream">
+	        	<param name="contentType">application/ms-excel</param>
+                <param name="inputName">inputStream</param>
+                <param name="bufferSize">1024</param>
+                <param name="contentDisposition">attachment;filename=${filename}</param> 
+        	</result>   			
+		</global-results>
+
+		<action name="notFound">
+		    <result>index.html</result>
+		</action>
+		
+		<action name="Login" class="web.action.accountadmin.LoginAction">
+			<result name="dt_error">/jsp/webui/login-${country}.jsp?t=${currentTime}</result>
+			<result name="dt">/jsp/webui/login-${country}.jsp?t=${currentTime}</result>
+			<result name="mb_error">/mobile/jsp/login-${country}.jsp?t=${currentTime}</result>
+			<result name="mb">/mobile/jsp/login-${country}.jsp?t=${currentTime}</result>
+		</action>
+		
+		<action name="CreateImg" class="web.action.accountadmin.CreateImgAction">
+				<result type="stream">  
+		               <param name="contentType">image/jpeg</param>  
+		               <param name="inputName">inputStream</param>  
+		        </result>  
+		       <interceptor-ref name="defaultStack" ></interceptor-ref>
+		</action>
+		
+		
+		<action name="GWShieldLogin" class="web.action.accountadmin.GWShieldLoginAction">
+			<result>Home.action</result>
+			<result name="input_dt">/jsp/webui/gw_shield_login_${country}.jsp</result>
+			<result name="input_mb">/mobile/jsp/gw_shield_login_${country}.jsp</result>
+		</action>
+		
+		<action name="Home" class="web.action.accountadmin.HomeAction">
+			<result name="error" type="redirect">Login.action</result>
+			<result name="gwshield">/jsp/webui/login-${country}.jsp?t=${currentTime}</result>
+			<result type="redirect">Administrator.action?t=${currentTime}</result>
+		</action>
+
+		<action name="LogOff" class="web.action.accountadmin.LogoffAction">
+			<result type="redirect">Login.action</result>
+		</action>
+		
+		<action name="Administrator" class="web.action.accountadmin.AdministratorAction">
+			<result name="dt">/jsp/webui/index-${country}.jsp</result>
+			<result name="mb">/mobile/jsp/index-${country}.jsp</result>
+			<!-- <result>/jsp/webui/index-${country}.jsp</result> -->
+<!-- 			<result name="index_tw">/jsp/webui/index-tw.jsp</result> -->
+<!-- 			<result name="index_zh">/jsp/webui/index-zh.jsp</result> -->
+		</action>
+		
+		<action name="AccountStatus" class="web.action.accountadmin.AccountStatusAction"></action>
+		
+		<action name="ReportForm" class="web.action.accountadmin.ReportFormAction"></action>
+		
+		<action name="ResetPassword" class="web.action.accountadmin.ResetPasswordAction"></action>
+		
+		<!-- 报价历史 -->
+		<action name="QuoteHistory" class="web.action.accountadmin.QuoteHistoryAction"></action>
+		
+		<action name="InitGoldMain" class="web.action.accountadmin.InitGoldMainAction"/>
+		
+		<action name="demologin" class="web.action.accountadmin.DemoLoginAction">
+			<result name="input">/jsp/webui/login-${#session["WW_TRANS_I18N_LOCALE_COUNTRY"]}.jsp</result>
+			<result type="redirect">Administrator.action?t=${currentTime}</result>
+		</action>
+		
+		<action name="infojump" class="web.action.accountadmin.DemoLoginAction"  method="infoErrorjump">
+			<result>/jsp/webui/login-${country}.jsp</result>
+		</action>
+		
+		<action name="creditOrder" class="web.action.accountadmin.Reportcredit">
+			<result name="success">/jsp/webui/accountInfo/reportcredit-${country}.jsp</result>
+		</action>
+				
+ 		<action name="ajaxRandom" class="web.action.accountadmin.RandonCodeAction" method="getDomeCode"></action> 
+ 		
+ 		<action name="downloadReport" class="web.action.accountadmin.ReportFormAction" method="downloadReport"/> 
+ 		
+		<action name="retakePassword" class="web.action.accountadmin.RetakePasswordAction" method="show">
+			<result name="success">/mobile/jsp/retakepassword/retakePassword-${country}.jsp</result>
+			
+		</action>
+		<action name="doRetakePassword" class="web.action.accountadmin.RetakePasswordAction" method="retakePassword">
+			<result name="success">/mobile/jsp/retakepassword/set-pwd-suc-${country}.jsp</result>
+			<result name="back">/mobile/jsp/retakepassword/retakePassword-${country}.jsp</result>
+		</action>
+		<action name="loginCheck" class="web.action.accountadmin.LoginCheckAction"></action> 
+    </package>
+</struts>

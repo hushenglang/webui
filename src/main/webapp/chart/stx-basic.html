@@ -1,0 +1,433 @@
+<!doctype html>
+<html>
+<!-- 
+Sample file for Modulus StockChartX HTML5 Charting Library
+Copyright 2012 by Modulus
+-->
+
+<head>
+<meta charset="utf-8" />
+<title>Modulus</title>
+<!-- Use these meta tags to bypass safari touch events on ipad, otherwise scrolling and drawing will not work -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/> <!-- some versions of IE11 do not render correctly without this -->
+
+<!-- Sample css file may be customized -->
+<link rel="stylesheet" type="text/css" href="stx-demo.css" media="screen" />
+<!--[if IE 8]><link rel="stylesheet" type="text/css" href="sample_style_ie8.css" media="screen" />
+<![endif]-->
+
+<!-- Default Theme Options -->
+<link href="stx-demo-theme-2.css" rel="stylesheet" type="text/css">
+<link href="stx-demo-theme-1.css" rel="stylesheet" type="text/css">
+
+<!-- Sample stock prices data -->
+<!--[if IE 8]><script type="text/javascript" src="excanvas.js"></script><![endif]--><!-- Use excanvas.js to support IE8. See notes in chartContainer -->
+<!--[if IE 8]><script>STX.isIE8=true;</script><![endif]-->
+
+</head>
+
+<body onLoad="displayChart()" style="overflow:hidden">
+<!-- ---------------------------------------- PAGE CONTENTS ------------------------------------------>
+
+<div class="stx-wrapper">
+      <div class="stx-nav">
+        <div id="search">
+          <input type="text" id="symbol" name="symbol" autocapitalize="off" autocorrect="off" spellcheck="off">
+        </div>
+        <div id="periodBtn" class="btn menu stxMenu">1D<em></em>
+          <ul id="periodicity" class="periodicity menuSelect menuOutline" style="display:none">
+          <li stxToggle="changePeriodicity('day')">1 D</li>
+            <li stxToggle="changePeriodicity('week')">1 W</li>
+            <li stxToggle="changePeriodicity('month')">1 Mo</li>
+            <li class="divider"></li>
+            <li stxToggle="changePeriodicity(5)">5 Min</li>
+            <li stxToggle="changePeriodicity(30)">30 Min</li>
+          </ul>
+        </div>
+        
+        <!-- These are very basic sample menus. You may replace these with another menuing system. Just follow the same onClick convention
+		or provide proxy functions that call the same code-->
+        
+        <div id="menus">
+          <div class="btn menu stxMenu">Chart<em></em>
+            <ul id="chart-display" class="chart-display menuSelect menuOutline" style="display:none">
+              <li class="heading">Chart Style</li>
+              <li stxToggle="stxx.setChartType('candle')">Candle</li>
+              <li stxToggle="stxx.setChartType('bar')">Bar</li>
+              <li stxToggle="stxx.setChartType('line')">Line</li>
+            </ul>
+          </div>
+ 
+          <div id="cogBtn" class="btn menu stxMenu">&nbsp;<em></em>
+              <ul id="cog" class="cog menuSelect menuOutline" style="display:none">
+                <li class="heading">Default Themes</li>
+                <li class="content">
+                  <ul class="menuSelect" id="builtInThemeSelector">
+                    <li>White</li>
+                    <li>Black</li>
+                  </ul></li>
+                <li class="content">
+                  <ul class="injected" id="customThemeSelector">
+                    <li class="heading">Custom Themes</li>
+                    <li class="themeSelectorTemplate" style="display:none"><a class="stxItem"></a>
+                      <div class="btn icon"><span class="close stxClose">x</span></div>
+                    </li>
+                    <li class="content"><div class="btn theme" stxToggle="STXDialogManager.displayDialog('themeDialog');STXThemeManager.populateDialog('themeDialog', stxx);">New Custom Theme</div></li>
+                  </ul>
+                </li>
+             </ul>
+          </div>
+        </div>
+      </div>
+      
+      <div class="stx-toolbar" id="stx-toolbar">
+        <div class="drawOptions">
+          <!--<div class="drawBtn btn" onClick="stxx.undoLast()">Undo</div>-->
+          <div class="drawBtn btn menu stxMenu"> <span id="toolSelection">Select Tool</span> <em></em>
+            <ul id="toolbarDraw" class="draw menuSelect menuOutline" style="display:none">
+            <li stxtoggle="STXDrawingToolbar.setVectorType(stxx,'');STXDrawingToolbar.crosshairs(stxx,false)">None</li>
+            <li stxtoggle="STXDrawingToolbar.setVectorType(stxx,'');STXDrawingToolbar.crosshairs(stxx,true)">Crosshairs</li>
+              <li stxtoggle="STXDrawingToolbar.setVectorType(stxx,'line');">Line</li>
+              <li stxtoggle="STXDrawingToolbar.setVectorType(stxx,'segment');">Segment</li>
+              <li stxtoggle="stxx.clearDrawings()">Clear Drawings</li>
+            </ul>
+          </div>
+          <div class="stx-drawing">
+            <div class="stx-draw-settings stxToolbarFill">
+              <div class="heading">Fill:</div>
+              <div class="color stxFillColorPicker" style="background-color: #7DA6F5;"><span></span></div>
+            </div>
+            <div class="stx-draw-settings stxToolbarLine">
+              <div class="heading">Line:</div>
+              <div class="color stxLineColorPicker" style="background-color: transparent;"><span></span></div>
+              <div class="stx-line-style btn menu stxMenu stxToolbarLinePicker"> <span class="stx-line style1 weight1 stxLineDisplay"></span><em></em>
+                  <ul id="stx-line-style-menu" class="stx-line-style-menu menuSelect menuOutline" style="display:none;">
+                      <li stxToggle="STXDrawingToolbar.setLine(1,'solid')"><span class="stx-line style1 weight1"></span></li>
+                      <li stxToggle="STXDrawingToolbar.setLine(3,'solid')"><span class="stx-line style1 weight2"></span></li>
+                      <li stxToggle="STXDrawingToolbar.setLine(5,'solid')"><span class="stx-line style1 weight3"></span></li>
+                      <li class="stxToolbarDotted divider"></li>
+                      <li class="stxToolbarDotted" stxToggle="STXDrawingToolbar.setLine(1,'dotted')"><span class="stx-line style2 weight1"></span></li>
+                      <li class="stxToolbarDotted" stxToggle="STXDrawingToolbar.setLine(3,'dotted')"><span class="stx-line style2 weight2"></span></li>
+                      <li class="stxToolbarDotted" stxToggle="STXDrawingToolbar.setLine(5,'dotted')"><span class="stx-line style2 weight3"></span></li>
+                      <li class="stxToolbarDashed divider"></li>
+                      <li class="stxToolbarDashed" stxToggle="STXDrawingToolbar.setLine(1,'dashed')"><span class="stx-line style3 weight1"></span></li>
+                      <li class="stxToolbarDashed" stxToggle="STXDrawingToolbar.setLine(3,'dashed')"><span class="stx-line style3 weight2"></span></li>
+                      <li class="stxToolbarDashed" stxToggle="STXDrawingToolbar.setLine(5,'dashed')"><span class="stx-line style3 weight3"></span></li>
+                      <li class="stxToolbarNone divider"></li>
+                      <li class="stxToolbarNone" stxToggle="STXDrawingToolbar.setLine(0,'none')">None</li>
+                    </ul>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <ul class="hu">
+          <li><span class="huLabel">O: </span><span id="huOpen" class="huField"></span></li>
+          <li><span class="huLabel">H: </span><span id="huHigh" class="huField"></span></li>
+          <li><span class="huLabel">V: </span><span id="huVolume" class="huField"></span></li>
+          <li><span class="huLabel">C: </span><span id="huClose" class="huField"></span></li>
+          <li><span class="huLabel">L: </span><span id="huLow" class="huField"></span></li>
+        </ul>
+      </div>
+    
+    <img id="loading" src="stx-loading.gif" style="display:none">
+
+    <!-- Theme Dialog -->
+    <div class="dialogContainer">
+      <div id="themeDialog" style="display:none" class="dialog">
+        <h4>Create a New Custom Theme</h4>
+        <div onClick="STXDialogManager.dismissDialog()" class="btn icon close"><span class="close">Close</span></div>
+        <div class="settings">
+          <ul>
+            <li class="heading">Chart Style</li>
+            <li>
+              <div class="heading">Candles</div>
+              <div class="data">
+                <div class="color stx_candle_up"><span></span></div>
+                <div class="color stx_candle_down"><span></span></div>
+              </div>
+            </li>
+            <li>
+              <div class="heading"><input id="candleBordersOn" type="checkbox" checked> Border</div>
+              <div class="data">
+              	<div class="border stx_candle_up"><span></span></div>
+              	<div class="border stx_candle_down"><span></span></div>
+              </div>
+            </li>
+            <li>
+              <div class="heading">Line/Bar/Wick</div>
+              <div class="data">
+                <div class="color stx_candle_shadow"><span></span></div>
+              </div>
+            </li>
+          </ul>
+          <ul>
+            <li class="heading">Background</li>
+            <li>
+              <div class="heading">Background</div>
+              <div class="data">
+                <div class="color backgroundColor"><span></span></div>
+              </div>
+            </li>
+            <li>
+              <div class="heading">Grid Lines</div>
+              <div class="data">
+                <div class="color stx_grid"><span></span></div>
+              </div>
+            </li>
+            <li>
+              <div class="heading">Date Dividers</div>
+              <div class="data">
+                <div class="color stx_grid_dark"><span></span></div>
+              </div>
+            </li>
+            <li>
+              <div class="heading">Axis Text</div>
+              <div class="data">
+                <div class="color stx_xaxis_dark"><span></span></div>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <label class="themeName" for="themeName">New Theme Name:</label><input type="text" id="themeName" name="themeName" autocapitalize="off" autocorrect="off" spellcheck="off" value="My Theme">
+        <div onClick="STXThemeManager.saveTheme($$('themeName').value, stxx);STXDialogManager.dismissDialog()" class="btn">Save Theme</div>
+      </div>
+    </div>
+
+    <div id="chartContainer" style="height: 460px;">  <!-- This is the container for the chart itself. This div will be passed in to the STXChart object. You may place this anywhere on your page. -->		      
+      </div>
+</div>
+
+<script src="STX_SAMPLE_DAILY.js"></script>
+<script src="STX_SAMPLE_5MIN.js"></script>
+<script src="STX_SAMPLE_30MIN.js"></script>
+<script src="stx.js"></script>
+<script type="text/javascript" charset="ISO-8859-1" src="stxKernelOs.js"></script> 
+<script>
+
+
+// Declare a STXChart object. This is the main object for drawing charts
+var stxx=new STXChart($$("chartContainer"));
+
+// This is a sample to demonstrate how the results of the open Yahoo Finance API can be used
+// to generate chart data. Be sure to use the Yahoo Finance symbol format (symbology) in the input box
+function convertYahooResults(quotes){
+	if(quotes && quotes.length==0) return;
+	for(var i=0;i<quotes.length;i++){
+		quotes[i].Open=parseFloat(quotes[i].Open);
+		quotes[i].Close=parseFloat(quotes[i].Close);
+		quotes[i].High=parseFloat(quotes[i].High);
+		quotes[i].Low=parseFloat(quotes[i].Low);
+		quotes[i].Volume=parseFloat(quotes[i].Volume);
+		quotes[i].Adj_Close=parseFloat(quotes[i].Adj_Close);
+	}
+	if(quotes.length>1){	// Weird Yahoo thing where they give duped bars after hours
+		if(quotes[quotes.length-1].Date==quotes[quotes.length-2].Date){
+			quotes.pop();
+		}
+	}
+}
+
+// Callback function for Yahoo API
+function cbfunc(yqlResult){
+	var count=yqlResult.query.count;
+	if(count>0){
+		enableStreaming=false;
+		var quotes=yqlResult.query.results.quote;
+		quotes.reverse();
+		convertYahooResults(quotes);
+		stxx.newChart($$("symbol").value, quotes);
+	}
+}
+
+// Example of how to retrieve data from Yahoo API. This utilizes so called JSONP concept. Note that Yahoo API is not
+// always available. This code does not error check and so a user may simply experience nothing if the Yahoo API
+// is down. Do not use in production without adding code to detect "unavailable" responses from Yahoo.
+var seq=0;	// Use a sequential counter to prevent IE from caching Yahoo script
+function getYahooQuotes(symbol){
+	var today=new Date();
+	var curr_date = today.getDate();
+	if(curr_date<10) curr_date="0" + curr_date;
+	var curr_month = today.getMonth()+1;
+	if(curr_month<10) curr_month="0" + curr_month;
+	var curr_year = today.getFullYear();
+
+	var yyyymmdd=curr_year + "-" + curr_month + "-" + curr_date;
+	var yyyymmdd2=(curr_year-1) + "-" + curr_month + "-" + curr_date;
+	var url="http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.historicaldata%20where%20symbol%3D'" + symbol + "'%20and%20startDate%3D'" + yyyymmdd2 + "'%20and%20endDate%3D'" + yyyymmdd + "'&format=json&diagnostics=true&env=http%3A%2F%2Fdatatables.org%2Falltables.env&callback=cbfunc" + "&seq=" + seq++;
+	var newScript=document.createElement("script");
+	$$("loading").style.display="block";
+	newScript.src=url;
+	newScript.onload=function(){
+		$$("loading").style.display="none";
+	};
+	newScript.onerror=function(){
+		$$("loading").style.display="none";		
+	};
+	document.body.appendChild(newScript);
+}
+
+/*
+ * Modify or replace this function to fetch your market data!
+ */
+
+function fetchMyData(symbol, interval, cb){
+	var myData=null;
+	if(interval=="day" || interval=="week" || interval=="month"){
+		myData=sampleData;
+	}else if(interval==5){
+		myData=sample5min;
+	}else if(interval==30){
+		myData=sample30min;
+	}
+	cb(myData);
+}
+
+// There is a distinction between end of day intervals (day, week, month) and intraday intervals.
+// Your periodicity function may be more complex and should load the appropriate time series data
+// based on the user's selection. Note that weekly and monthly data are calculated automatically from daily
+// data if enough of it is supplied with a query. Add any additional intervals that you support to the displayMap
+function changePeriodicity(newInterval){
+	var displayMap={
+			"day":{"1":"1D"},
+			"week":{"1":"1W"},
+			"month":{"1":"1M"},
+			"5":{"1":"5m"},
+			"30":{"1":"30m"}
+	};
+	var symbol=stxx.symbol;
+	if(isNaN(newInterval)){	// numeric intervals are intraday, non-numeric are daily, weekly or monthly
+		fetchMyData(symbol, newInterval, function(data){
+			stxx.setPeriodicityV2(1, newInterval);// weekly & monthly charts can be built automatically using daily data, just pass in "week" or "month" for the interval
+			stxx.newChart(symbol, data);
+			$$$("#periodBtn").childNodes[0].data=displayMap[newInterval][1];
+		});
+	}else{
+		fetchMyData(symbol, newInterval, function(data){
+			stxx.setPeriodicityV2(1, newInterval);
+			stxx.newChart(symbol, data);
+			$$$("#periodBtn").childNodes[0].data=displayMap[newInterval][1];
+		});
+	}
+}
+
+/*
+ * Initial function that is called when chart loads. If you want the chart to default to a security, or if you're passing a security in with a query string then load it here
+*/
+function displayChart(){
+	var symbol="SPY";
+	fetchMyData(symbol, "day", function(data){
+		stxx.newChart(symbol, data);
+		stxx.setPeriodicityV2(1, "day");
+	});
+}
+
+/*
+ * Modify the components in this function to establish the behavior of your UI.
+ */
+function runSampleUI(){
+	STXThemeManager.builtInThemes={
+			"Light":"stx-demo-theme-1.css",
+			"Dark":"stx-demo-theme-2.css"
+	};
+	// Set up menu manager
+	STXMenuManager.makeMenus();
+	STXMenuManager.registerChart(stxx);
+
+	STXThemeManager.setThemes(JSON.parse(STXStorageManager.get("themes")), stxx);
+	STXThemeManager.themesToMenu($$("customThemeSelector"), $$("builtInThemeSelector"), stxx, STXStorageManager.callbacker("themes"));
+
+	STXDrawingToolbar.initialize();
+	STXDrawingToolbar.setVectorType(stxx, null);
+	
+	function textCallback(that, txt, filter, clicked){
+		if(clicked){
+			$$$("#symbol").value="";
+		}		// Set up lookup result widget using dummy data you will need to build your own lookup function that returns data in this format!
+		var sampleResults=[
+	 	{symbol:"S",description:"Sprint Corporation", exchange:"NYSE"},
+	 	{symbol:"SPY",description:"SPDR S&amp;P 500 ETF", exchange:"NYSE"},
+	 	{symbol:"^GSPC",description:"SPDR S&amp;P 500", exchange:""},
+	 	{symbol:"CSCO",description:"Cisco Systems, Inc.", exchange:"NASDAQ"},
+	 	{symbol:"SWKS",description:"Skyworks Solutions Inc.", exchange:"NASDAQ"},
+	 	{symbol:"GLD",description:"SPDR Gold Shares", exchange:"NYSE"},
+	 	{symbol:"WMT",description:"Wal-Mart Stores Inc.", exchange:"NYSE"},
+	 	{symbol:"SLV",description:"iShares Silver Trust", exchange:"NYSE"},
+	 	{symbol:"DDD",description:"3D Systems Corp.", exchange:"NYSE"},
+	 	{symbol:"GS",description:"The Goldman Sachs Group, Inc.", exchange:"NYSE"},
+	 	{symbol:"USDAUD",description:"US Dollar Australian Dollar", exchange:"FX"},
+	 	{symbol:"USDBRL",description:"US Dollar Brazilian Real", exchange:"FX"}
+	 	];
+		that.displayResults(sampleResults); // Display the results in the drop down
+		
+		/*
+		// this is sample code for enabling suggestive search using an ajax query
+		// have your server return a JSON object in the format of sampleResults above
+		function processSearchResults(that){
+			return function(status, results){
+				if(status==200){
+					that.displayResults(JSON.parse(results));
+				}
+			};
+		}
+		var url="http://yourdomain.com?search=" + txt + "&filter" = filter;
+		postAjax(url, null, processSearchResults(that));
+		*/
+	}
+	
+	function selectCallback(that, symbol, filter){
+		getYahooQuotes(symbol);		// Instead of getting quotes from yahoo, replace this with a function to get quotes from your data source.
+	}
+	
+	var config={
+		input: $$$("#symbol"),
+		textCallback: textCallback,			// If you don't have a symbol lookup then just leave this blank
+		selectCallback: selectCallback,
+		filters:["ALL","STOCKS","FOREX","INDEXES"]	// Change these filters to the security types that you support
+	};
+	stxLookupWidget=new STXLookupWidget(config);
+	stxLookupWidget.init();
+	
+
+}
+
+
+stxx.setVolumeUnderlay(!stxx.layout.volumeUnderlay);
+
+
+function prependHeadsUpHR(){
+	var tick=Math.floor((STXChart.crosshairX-this.chart.left)/this.layout.candleWidth);
+	var prices=this.chart.xaxis[tick];
+	
+	$$("huOpen").innerHTML="";
+	$$("huClose").innerHTML="";
+	$$("huHigh").innerHTML="";
+	$$("huLow").innerHTML="";
+	$$("huVolume").innerHTML="";
+	if(prices!=null){
+		if(prices.data){
+			$$("huOpen").innerHTML=this.formatPrice(prices.data.Open);
+			$$("huClose").innerHTML=this.formatPrice(prices.data.Close);
+			$$("huHigh").innerHTML=this.formatPrice(prices.data.High);
+			$$("huLow").innerHTML=this.formatPrice(prices.data.Low);
+			$$("huVolume").innerHTML=condenseInt(prices.data.Volume);
+		}
+	}
+}
+
+STXChart.prototype.prepend("headsUpHR", prependHeadsUpHR);
+
+
+runSampleUI();
+
+</script>
+</body>
+</html>
+
+
+
+
+
+

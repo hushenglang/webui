@@ -1,0 +1,130 @@
+﻿body{font:12px/1.4 arial;color:#3f3f3f;background:#fff}
+body,p,ol,ul,li,h1,h2,h3,h4,h5,h6,dl,dt,dd,pre,input{margin:0;padding:0}
+body{background:#E8E8E8}
+ol,ul,li{list-style:none}
+input{border:0 none;font-family:arial}
+img{border:0 none}
+.fl{float:left}
+.fr{float:right}
+.red{color:#EF2525}
+.blue,a.blue{color:#373838}
+.tcen{text-align:center}
+.vcen{vertical-align:middle}
+.hide-t{line-height:9999em;overflow:hidden}
+.dn{display:none}
+.hei{color:#000}
+.clearfix{zoom:1}
+.clearfix:after{clear:both;content:"";display:block;height:0;visibility:hidden}
+a{outline:none;text-decoration:none;color:#707070}
+a:active{noOutline:expression(this.onFocus=this.blur())}
+:focus{outline:0;} 
+a:hover{text-decoration:underline}
+.w1000{margin:0 auto;width:1000px;min-width:1000px}
+
+/* img-bg */
+.logo{background:url(../images/login.png) no-repeat}
+
+/* header */
+.headbg{ background:#fff}
+#header{margin:0 auto;width:1000px;min-width:1000px;height:67px; background:#fff}
+.logo{width:380px;height:67px;background-position:0 16px}
+.logo a{display:block;height:67px}
+.r-menu{margin-top:37px;color:#EAEDF1}
+.r-menu a{padding:0 6px;color:#606060}
+.r-menu .c-on{color:#BDBDBD;font-weight:bold}
+.form-box{margin:22px 0 0 0; padding-left:112px;}
+.form-listbox{position:relative;padding:8px 0}
+.form-listbox label{display:block;width:57px;line-height:28px;color:#733e18}
+.in-aput{position:relative;display:inline-block;color:#999;padding-left:5px;margin-right:8px;width:245px;height:28px;line-height:28px;border:solid #D4D4D3 1px;z-index:20}
+.inp-fon{color:#733E18}
+.in-aput-yzm{width:163px}
+.ly-btnbox{margin:8px 0 0 0}
+.ly-btnbox a.submit-btn{display:inline-block;border-radius:3px;width:252px;height:36px;color:#fdfbfb;font:16px/36px 'microsoft yahei';text-align:center; background:#D5AF43; box-shadow:0 0 2px #DEDEDE; margin-right:12px}
+.ly-btnbox a.submit-btn:hover{opacity:0.9;filter:alpha(opacity=90);text-decoration:none}
+.ly-btnbox .qingc-btn{margin-right:36px;background:#D5AF43}
+.ly-btnbox a.blue{ text-decoration:underline}
+.ly-btnbox a.blue:hover{text-decoration:none}
+
+
+/* center */
+.user-dengl{position:relative;margin:0 auto;width:1000px;z-index:10; }
+.input-box{position:relative;width:252px;overflow:hidden}
+#con-bgbox{min-width:1000px;height:482px;border-top:solid #B59130 3px; background:#fff}
+.login-box{ position:absolute; top:60px; left:502px;height:318px;width:476px; border:solid #C8A43F 1px; background:#F7F7F7;}
+.nav-qhbox{height:45px; border-bottom:1px solid #D5AF43; background:#fff;}
+.nav-qhbox li{float:left;width:238px;height:45px;line-height:44px;overflow:hidden;cursor:pointer; text-align:center; font-size:22px;font-family:"Microsoft YaHei"; color:#6c6c6c;}
+.nav-qhbox li.current{ background:#C8A43F; color:#fff;}
+.ly-zh-info{margin:9px 0 0 0;width:252px}
+.ly-zh-info .p1{width:123px; margin-right:22px; background:url(../images/login.png) no-repeat right -140px}
+.ly-zh-info a{ display:inline-block; height:24px; line-height:24px; color:#383838; background:url(../images/login.png) no-repeat 0 -182px; padding-left:30px;}
+a.reg_mo{ background-position:-304px -182px;}
+a.forget_ma{ display:inline-block; padding-right:26px; background:url(../images/login.png) no-repeat right -103px;}
+.tishi-info{width:252px;margin: 0;text-align:center}
+.f-wd-text{line-height:28px;padding-left:12px}
+.pwd-float{position:absolute;top:0;left:7px;color:#999;height:28px;line-height:28px;z-index:100}
+
+/* layer */
+.layer-out{position:absolute;background:#fff;z-index:9999;margin-top:-250px}
+.layer-topbg{height:64px;background:#f7f7f7;border-bottom:solid #9F9069 1px}
+.ui-dialog-titlebar{position:relative}
+.ui-front{z-index:100}
+.ui-state-disabled{cursor:default!important}
+.ui-icon{display:block;text-indent:-99999px;overflow:hidden;background-repeat:no-repeat}
+.ui-widget-overlay{position:fixed;top:0;left:0;width:100%;height:100%}
+.ui-resizable-handle{position:absolute;display:block}
+.ui-resizable-disabled .ui-resizable-handle,.ui-resizable-autohide .ui-resizable-handle{display:none}
+.ui-widget-overlay{opacity:.3;filter:Alpha(Opacity=30);background:#333;z-index:100}
+.ui-widget-header .ui-state-default{position:absolute;top:7px;right:5px;width:28px;height:20px;background: url(../images/index-sprite.png) no-repeat;background-position:-372px -185px;font-weight:normal;color:#555;border:none;cursor:pointer;z-index:999999}
+.ui-widget-header .ui-state-default:hover{background: url(../images/index-sprite.png) no-repeat;background-position:-342px -185px}
+.ui-button-text{display:none}
+.ui-dialog .ui-dialog-titlebar{padding:.4em 1em;position:relative;top:-250px;height:23px;line-height:23px;font-size:12px;font-weight:bold;color:#000;background: url(../images/index-sprite.png) repeat-x 0 -683px}
+.layer-topbg a{display:block;margin:0 auto;width:242px;height:64px;background:url(../images/logo.png) no-repeat}
+.layer-con{position:relative;width:660px;border-radius:3px;overflow:hidden}
+.lay-cenbox{height:400px;background:#fff;overflow:hidden}
+.lay-cenbox ul{height:400px;overflow-y:scroll;overflow-x:hidden}
+.lay-cenbox li{padding:8px 15px;line-height:22px}
+.lay-cenbox .li-bg{background:#F9F8F3;border:solid #E2DCCB;border-width:1px 0}
+
+/*活动图片*/
+.login_artpic{ position:absolute; width:500px; height:323px; top:60px;}
+.login_artpic a{ display:block}
+/*message css*/
+.market_nosup{ background:#FFFFFF; text-align:center; height:395px;  color:#646464; font-family:"Microsoft YaHei";}
+.nosup_txt1{ padding-top:120px;  font-size:20px; margin-bottom:12px; color:#B59130}
+.nosup_txt2{ font-size:14px}
+.browser_box{ padding-top:42px}
+.browser_box a{ display:inline-block; margin:0 23px; padding-top:64px; text-decoration:underline; color:#646464; font-size:15px; background: url(../images/browser_login.png) no-repeat 35px 0;}
+.browser_box a:hover{ color:#333; text-decoration:none}
+.browser_box .firefox{ background-position:-146px 0}
+.browser_box .sougu{ background-position:-322px 0}
+.browser_box .browser360{ background-position:-502px 0}
+
+/* 金道盾登录 */
+#jdd-bgbox{background:#ECDFBF url(../images/jdd-ban.jpg) no-repeat center top;
+min-width:1000px;height:482px;border-top:solid #B59130 3px; border-bottom: 1px solid #50280b;}
+.login-box-jdd{width:500px;padding-left:0;background:url(../images/l-bg-jdd.png) repeat-x; top:30px; left:440px;}
+.login_all_dl{position:relative;top:113px;left:33px}
+.login_all_dl dt,.login_all_dl dd{float:left;display:inline-block}
+.login_all_dl dt{width:auto;color:#733E18;height:28px;line-height:28px}
+.login_all_dl .inp_a1{width:290px;border:1px solid #D4D4D3; height:28px; line-height:28px; background:#fff; text-indent:5px; font-family:Arial}
+.login_all_dl .login_all_dl{position:relative;padding:171px 0 0 268px;height:270px}
+.login_all_dl .login_all_d1{margin-bottom:0;height:auto}
+.login_all_dl .login_all_d2{color:#999;margin:10px 0 0 132px}
+.login_all_dl .login_all_d3{padding:25px 0 0 133px}
+.login_all_dl .tishi-info{position:absolute;text-align:left;bottom:130px;right:76px;*right:71px;width:242px;padding:5px 10px 5px 38px;line-height:21px;background:#FDEEE9 url(../images/dian.png) no-repeat 12px 6px;border:solid #F9C8BE 1px}
+.login_all_d3 a{float:left;margin-right:10px;display:inline-block;width:110px;height:38px;font:20px/38px microsoft yahei;color:#fff;text-align:center;background:#D5AF43;border-radius:4px;overflow:hidden}
+.login_all_d3 a:hover{text-decoration:none;opacity:0.85;filter:alpha(opacity=85)}
+.tishi-info span{color:#018ce0}
+
+
+/* footer */
+#footer{color:#999;padding:20px 0 35px;text-align:center; background:#E8E8E8}
+.menu-link{height:34px;color:#c9c9c9}
+.menu-link a{color:#4d4d4d;padding:0 12px}
+.copy-info{height:25px}
+
+/* 繁体 */
+.nav-qhbox-tw .nav1{background-position:-186px -113px}
+.nav-qhbox-tw .nav1-on{background-position:-198px -69px;cursor:default}
+.nav-qhbox-tw .nav2{background-position:-294px -69px}
+.nav-qhbox-tw .nav2-on{background-position:-283px -115px;cursor:default}

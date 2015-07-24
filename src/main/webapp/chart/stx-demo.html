@@ -1,0 +1,790 @@
+<!doctype html>
+<html>
+<!-- 
+Sample file for StockChartX HTML5 Charting Library
+Copyright 2012 by Modulus
+-->
+
+<head>
+<meta charset="utf-8" />
+<title>StockChartX</title>
+<!-- Use these meta tags to bypass safari touch events on ipad, otherwise scrolling and drawing will not work -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/> <!-- some versions of IE11 do not render correctly without this -->
+
+<!-- Sample css file may be customized -->
+<link rel="stylesheet" type="text/css" href="stx-demo.css" media="screen" />
+<!--[if IE 8]><link rel="stylesheet" type="text/css" href="sample_style_ie8.css" media="screen" />
+<![endif]-->
+
+<!-- Default Theme Options -->
+<link href="stx-demo-theme-2.css" rel="stylesheet" type="text/css">
+<link href="stx-demo-theme-1.css" rel="stylesheet" type="text/css">
+
+<!-- Sample stock prices data -->
+<!--[if IE 8]><script type="text/javascript" src="excanvas.js"></script><![endif]--><!-- Use excanvas.js to support IE8. See notes in chartContainer -->
+<!--[if IE 8]><script>STX.isIE8=true;</script><![endif]-->
+
+</head>
+
+<body onLoad="displayChart()" style="overflow:hidden">
+<!-- ---------------------------------------- PAGE CONTENTS ------------------------------------------>
+
+<div class="stx-wrapper">
+      <div class="stx-nav">
+        <div id="search">
+          <input type="text" id="symbol" name="symbol" autocapitalize="off" autocorrect="off" spellcheck="off">
+        </div>
+        <div id="periodBtn" class="btn menu stxMenu">1D<em></em>
+          <ul id="periodicity" class="periodicity menuSelect menuOutline" style="display:none">
+            <li stxToggle="changePeriodicity('day')">1 D</li>
+            <li stxToggle="changePeriodicity('week')">1 W</li>
+            <li stxToggle="changePeriodicity('month')">1 Mo</li>
+            <li class="divider"></li>
+            <li stxToggle="changePeriodicity(5)">5 Min</li>
+            <li stxToggle="changePeriodicity(30)">30 Min</li>
+          </ul>
+        </div>
+        
+        <!-- These are very basic sample menus. You may replace these with another menuing system. Just follow the same onClick convention
+		or provide proxy functions that call the same code-->
+        
+        <div id="menus">
+          <div class="btn menu stxMenu">Chart<em></em>
+            <ul id="chart-display" class="chart-display menuSelect menuOutline" style="display:none">
+              <li class="heading">Chart Style</li>
+              <li stxToggle="stxx.setChartType('candle')">Candle</li>
+              <li stxToggle="stxx.setChartType('bar')">Bar</li>
+              <li stxToggle="stxx.setChartType('colored_bar')">Colored Bar</li>
+              <li stxToggle="stxx.setChartType('line')">Line</li>
+              <li stxToggle="stxx.setChartType('hollow_candle')">Hollow Candles</li>
+              <li stxToggle="stxx.setChartType('mountain')">Mountain</li>
+              <li class="divider"></li>
+              <li class="heading">Chart Scale</li>
+              <li class="stx-option" stxToggle="toggleLog()">Log Scale<span class="stx-checkbox false"></span></li>
+            </ul>
+          </div>
+          <div class="btn menu stxMenu">Studies<em></em>
+            <div id="studies" class="studies menuSelect menuOutline" style="display:none">
+              <ul class="col">
+                <li stxToggle="studyDialog(this,'Acc Swing');">Accumulative Swing Index</li>
+                <li stxToggle="studyDialog(this, 'Aroon');">Aroon</li>
+                <li stxToggle="studyDialog(this, 'Aroon Osc');">Aroon Oscillator</li>
+                <li stxToggle="studyDialog(this, 'ATR');">Average True Range</li>
+                <li stxToggle="studyDialog(this, 'Bollinger Bands');">Bollinger Bands</li>
+                <li stxToggle="studyDialog(this, 'COG');">Center Of Gravity</li>
+                <li stxToggle="studyDialog(this, 'Chaikin MF');">Chaikin Money Flow</li>
+                <li stxToggle="studyDialog(this, 'Chaikin Vol');">Chaikin Volatility</li>
+                <li stxToggle="studyDialog(this, 'Chande Fcst');">Chande Forecast Oscillator</li>
+                <li stxToggle="studyDialog(this, 'Chande Mtm');">Chande Momentum Oscillator</li>
+                <li stxToggle="studyDialog(this, 'CCI');">Commodity Channel Index</li>
+                <li stxToggle="studyDialog(this, 'Coppock');">Coppock Curve</li>
+                <li stxToggle="studyDialog(this, 'Detrended');">Detrended Price Oscillator</li>
+                <li stxToggle="studyDialog(this, 'Directional');">Directional Movement System</li>
+                <li stxToggle="studyDialog(this, 'EOM');">Ease of Movement</li>
+                <li stxToggle="studyDialog(this, 'Ehler Fisher');">Ehler Fisher Transform</li>
+                <li stxToggle="studyDialog(this, 'Elder Force');">Elder Force Index</li>
+                <li stxToggle="studyDialog(this, 'Elder Ray');">Elder Ray</li>
+                <li stxToggle="studyDialog(this, 'Fractal Chaos Bands');">Fractal Chaos Bands</li>
+                <li stxToggle="studyDialog(this, 'Fractal Chaos');">Fractal Chaos Oscillator</li>
+              </ul>
+              <ul class="col">
+                <li stxToggle="studyDialog(this, 'Gopala');">Gopalakrishnan Range Index</li>
+                <li stxToggle="studyDialog(this, 'High Low');">High Low Bands</li>
+                <li stxToggle="studyDialog(this, 'High-Low');">High Minus Low</li>
+                <li stxToggle="studyDialog(this, 'HHV');">Highest High Value</li>
+                <li stxToggle="studyDialog(this, 'Hist Vol');">Historical Volatility</li>
+                <li stxToggle="studyDialog(this, 'Intraday Mtm');">Intraday Momentum Index</li>
+                <li stxToggle="studyDialog(this, 'Keltner');">Keltner Channel</li>
+                <li stxToggle="studyDialog(this, 'Klinger');">Klinger Volume Oscillator</li>
+                <li stxToggle="studyDialog(this, 'Lin Fcst');">Linear Reg Forecast</li>
+                <li stxToggle="studyDialog(this, 'Lin Incpt');">Linear Reg Intercept</li>
+                <li stxToggle="studyDialog(this, 'Lin R2');">Linear Reg R2</li>
+                <li stxToggle="studyDialog(this, 'LR Slope');">Linear Reg Slope</li>
+                <li stxToggle="studyDialog(this, 'LLV');">Lowest Low Value</li>
+                <li stxToggle="studyDialog(this, 'macd');">MACD</li>
+                <li stxToggle="studyDialog(this, 'Mass Idx');">Mass Index</li>
+                <li stxToggle="studyDialog(this, 'Med Price');">Median Price</li>
+                <li stxToggle="studyDialog(this, 'Momentum');">Momentum Oscillator</li>
+                <li stxToggle="studyDialog(this, 'M Flow');">Money Flow Index</li>
+                <li stxToggle="studyDialog(this, 'ma');">Moving Average</li>
+                <li stxToggle="studyDialog(this, 'MA Env');">Moving Average Envelope</li>
+              </ul>
+              <ul class="col">
+                <li stxToggle="studyDialog(this, 'Neg Vol');">Negative Volume Index</li>
+                <li stxToggle="studyDialog(this, 'On Bal Vol');">On Balance Volume</li>
+                <li stxToggle="studyDialog(this, 'PSAR');">Parabolic SAR</li>
+                <li stxToggle="studyDialog(this, 'Perf Idx');">Performance Index</li>
+                <li stxToggle="studyDialog(this, 'Pos Vol');">Positive Volume Index</li>
+                <li stxToggle="studyDialog(this, 'Pretty Good');">Pretty Good Oscillator</li>
+                <li stxToggle="studyDialog(this, 'Price Osc');">Price Oscillator</li>
+                <li stxToggle="studyDialog(this, 'Price ROC');">Price Rate of Change</li>
+                <li stxToggle="studyDialog(this, 'Price Vol');">Price Volume Trend</li>
+                <li stxToggle="studyDialog(this, 'Prime Number Bands');">Prime Number Bands</li>
+                <li stxToggle="studyDialog(this, 'Prime Number');">Prime Number Oscillator</li>
+                <li stxToggle="studyDialog(this, 'QStick');">QStick</li>
+                <li stxToggle="studyDialog(this, 'Random Walk');">Random Walk Index</li>
+                <li stxToggle="studyDialog(this, 'RAVI');">RAVI</li>
+                <li stxToggle="studyDialog(this, 'rsi');">RSI</li>
+                <li stxToggle="studyDialog(this, 'Schaff');">Schaff Trend Cycle</li>
+                <li stxToggle="studyDialog(this, 'STD Dev');">Standard Deviation</li>
+                <li stxToggle="studyDialog(this, 'stochastics');">Stochastics</li>
+                <li stxToggle="studyDialog(this, 'Stch Mtm');">Stochastic Momentum Index</li>
+                <li stxToggle="studyDialog(this, 'stochastics');">Stochastic Oscillator</li>
+              </ul>
+              <ul class="col">
+                <li stxToggle="studyDialog(this, 'Swing');">Swing Index</li>
+                <li stxToggle="studyDialog(this, 'Time Fcst');">Time Series Forecast</li>
+                <li stxToggle="studyDialog(this, 'Trade Vol');">Trade Volume Index</li>
+                <li stxToggle="studyDialog(this, 'TRIX');">TRIX</li>
+                <li stxToggle="studyDialog(this, 'True Range');">True Range</li>
+                <li stxToggle="studyDialog(this, 'Twiggs');">Twiggs Money Flow</li>
+                <li stxToggle="studyDialog(this, 'Typical Price');">Typical Price</li>
+                <li stxToggle="studyDialog(this, 'Ultimate');">Ultimate Oscillator</li>
+                <li stxToggle="studyDialog(this, 'VT HZ Filter');">Vertical Horizontal Filter</li>
+                <li stxToggle="createVolumePanel();">Volume</li>
+                <li stxToggle="toggleVolumeUnderlay();">Vol Underlay</li>
+                <li stxToggle="studyDialog(this, 'Vol Osc');">Volume Oscillator</li>
+                <li stxToggle="studyDialog(this, 'Vol ROC');">Volume Rate of Change</li>
+                <li stxToggle="studyDialog(this, 'Weighted Close');">Weighted Close</li>
+                <li stxToggle="studyDialog(this, 'Williams %R');">Williams %R</li>
+                <li stxToggle="studyDialog(this, 'W Acc Dist');">Williams Accumulation Distribution</li>
+              </ul>
+            </div>
+          </div>
+          <div id="cogBtn" class="btn menu stxMenu">&nbsp;<em></em>
+              <ul id="cog" class="cog menuSelect menuOutline" style="display:none">
+               <li class="heading">Timezone</li>
+                <li stxToggle="STXDialogManager.displayDialog('timezoneDialog');STXTimeZoneWidget.populateDialog('timezoneDialog', true);">Change Timezone</li>
+                <li class="divider">&nbsp;</li>
+                <li class="heading">Default Themes</li>
+                <li class="content">
+                  <ul class="menuSelect" id="builtInThemeSelector">
+                    <li>White</li>
+                    <li>Black</li>
+                  </ul></li>
+                <li class="content">
+                  <ul class="injected" id="customThemeSelector">
+                    <li class="heading">Custom Themes</li>
+                    <li class="themeSelectorTemplate" style="display:none"><a class="stxItem"></a>
+                      <div class="btn icon"><span class="close stxClose">x</span></div>
+                    </li>
+                  </ul>
+                </li>
+                <li class="content"><div class="btn theme" stxToggle="STXDialogManager.displayDialog('themeDialog');STXThemeManager.populateDialog('themeDialog', stxx);">New Custom Theme</div></li>
+             </ul>
+          </div>
+          <div class="btn" onclick="toggleFullScreenMode()">F
+          </div>
+        </div>
+      </div>
+      
+      <div class="stx-toolbar" id="stx-toolbar">
+        <div class="drawOptions">
+          <!--<div class="drawBtn btn" onClick="stxx.undoLast()">Undo</div>-->
+          <div class="drawBtn btn menu stxMenu"> <span id="toolSelection">Select Tool</span> <em></em>
+            <ul id="toolbarDraw" class="draw menuSelect menuOutline" style="display:none">
+            <li stxtoggle="STXDrawingToolbar.setVectorType(stxx,'');STXDrawingToolbar.crosshairs(stxx,false)">None</li>
+            <li stxtoggle="STXDrawingToolbar.setVectorType(stxx,'');STXDrawingToolbar.crosshairs(stxx,true)">Crosshairs</li>
+              <li stxtoggle="STXDrawingToolbar.setVectorType(stxx,'annotation');">Annotation</li>
+              <li stxtoggle="STXDrawingToolbar.setVectorType(stxx,'fibonacci');">Fibonacci</li>
+              <li stxtoggle="STXDrawingToolbar.setVectorType(stxx,'horizontal');">Horizontal</li>
+              <li stxtoggle="STXDrawingToolbar.setVectorType(stxx,'line');">Line</li>
+              <li stxtoggle="STXDrawingToolbar.setVectorType(stxx,'ray');">Ray</li>
+              <li stxtoggle="STXDrawingToolbar.setVectorType(stxx,'segment');">Segment</li>
+              <li stxtoggle="STXDrawingToolbar.setVectorType(stxx,'rectangle');">Rectangle</li>
+              <li stxtoggle="STXDrawingToolbar.setVectorType(stxx,'ellipse');">Ellipse</li>
+              <li stxtoggle="stxx.clearDrawings()">Clear Drawings</li>
+            </ul>
+          </div>
+          <div class="stx-drawing">
+            <div class="stx-draw-settings stxToolbarFill">
+              <div class="heading">Fill:</div>
+              <div class="color stxFillColorPicker" style="background-color: #7DA6F5;"><span></span></div>
+            </div>
+            <div class="stx-draw-settings stxToolbarLine">
+              <div class="heading">Line:</div>
+              <div class="color stxLineColorPicker" style="background-color: transparent;"><span></span></div>
+              <div class="stx-line-style btn menu stxMenu stxToolbarLinePicker"> <span class="stx-line style1 weight1 stxLineDisplay"></span><em></em>
+                  <ul id="stx-line-style-menu" class="stx-line-style-menu menuSelect menuOutline" style="display:none;">
+                      <li stxToggle="STXDrawingToolbar.setLine(1,'solid')"><span class="stx-line style1 weight1"></span></li>
+                      <li stxToggle="STXDrawingToolbar.setLine(3,'solid')"><span class="stx-line style1 weight2"></span></li>
+                      <li stxToggle="STXDrawingToolbar.setLine(5,'solid')"><span class="stx-line style1 weight3"></span></li>
+                      <li class="stxToolbarDotted divider"></li>
+                      <li class="stxToolbarDotted" stxToggle="STXDrawingToolbar.setLine(1,'dotted')"><span class="stx-line style2 weight1"></span></li>
+                      <li class="stxToolbarDotted" stxToggle="STXDrawingToolbar.setLine(3,'dotted')"><span class="stx-line style2 weight2"></span></li>
+                      <li class="stxToolbarDotted" stxToggle="STXDrawingToolbar.setLine(5,'dotted')"><span class="stx-line style2 weight3"></span></li>
+                      <li class="stxToolbarDashed divider"></li>
+                      <li class="stxToolbarDashed" stxToggle="STXDrawingToolbar.setLine(1,'dashed')"><span class="stx-line style3 weight1"></span></li>
+                      <li class="stxToolbarDashed" stxToggle="STXDrawingToolbar.setLine(3,'dashed')"><span class="stx-line style3 weight2"></span></li>
+                      <li class="stxToolbarDashed" stxToggle="STXDrawingToolbar.setLine(5,'dashed')"><span class="stx-line style3 weight3"></span></li>
+                      <li class="stxToolbarNone divider"></li>
+                      <li class="stxToolbarNone" stxToggle="STXDrawingToolbar.setLine(0,'none')">None</li>
+                    </ul>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <ul class="hu">
+          <li><span class="huLabel">O: </span><span id="huOpen" class="huField"></span></li>
+          <li><span class="huLabel">H: </span><span id="huHigh" class="huField"></span></li>
+          <li><span class="huLabel">V: </span><span id="huVolume" class="huField"></span></li>
+          <li><span class="huLabel">C: </span><span id="huClose" class="huField"></span></li>
+          <li><span class="huLabel">L: </span><span id="huLow" class="huField"></span></li>
+        </ul>
+      </div>
+    
+    <img id="loading" src="stx-loading.gif" style="display:none">
+
+    <!-- Indicator Dialogs -->
+    <div class="dialogContainer"> 
+      <!-- The studyDialog is a general purpose dialog for entering the parameters for studies. It may be customized so long
+    as the id an class names remain the same. Note that it contains templates which are replicated dynamically -->
+      <div id="studyDialog" style="display:none;" class="dialog">
+        <h4 class="title"></h4>
+        <div onClick="STXDialogManager.dismissDialog()" class="btn icon close"><span class="close"></span></div>
+        <div id="inputs">
+          <div class="inputTemplate" style="display:none">
+            <div class="heading"></div>
+            <div class="data"></div>
+          </div>
+        </div>
+        <div id="outputs">
+          <hr/>
+          <div class="outputTemplate" style="display:none">
+            <div class="heading"></div>
+            <div class="color"><span></span></div>
+          </div>
+        </div>
+        <div id="parameters"></div>
+        <div onClick="createStudy();STXDialogManager.dismissDialog()" class="btn">Create</div>
+      </div>
+    </div>
+    
+    <div id="studyOverZones" style="display:none">Show Zones<input id="studyOverZonesEnabled" type="checkbox">
+	  <div class="outputTemplate">
+	    <div class="heading">OverBought</div>
+	    <div class="data">
+	      <input id="studyOverBoughtValue" type="text" style="width:18px;">
+	      <div class="color" id="studyOverBoughtColor"><span></span></div>
+        </div>
+	  </div>
+	  <div class="outputTemplate">
+	    <div class="heading">OverSold</div>
+        <div class="data">
+	      <input id="studyOverSoldValue" type="text" style="width:18px;">
+	      <div class="color" id="studyOverSoldColor"><span></span></div>
+        </div>
+	  </div>
+    </div>
+    
+    <!-- Timezone Dialogs -->
+    <div class="dialogContainer">
+      <div id="timezoneDialog" style="display:none;" class="dialog">
+        <h4 class="title">Choose Timezone</h4>
+        <div onClick="STXDialogManager.dismissDialog()" class="btn icon close"><span class="close">Close</span></div>
+        <p>To set your timezone use the location button below, or scroll through the following list...</p>
+        <div class="detect">
+    		<div class="btn" onClick="STXTimeZoneWidget.removeTimeZone();STXDialogManager.dismissDialog();">Use My Current Location</div>
+    	</div>
+        <div id="timezoneDialogWrapper" style="max-height:360px;">
+	        <ul>
+	          <li id="timezoneTemplate" style="display:none;cursor:pointer;"></li>
+	        </ul>
+        </div>
+        <div class="instruct">(Scroll for more options)</div>
+      </div>
+    </div>
+
+    
+    
+    <!-- Theme Dialog -->
+    <div class="dialogContainer">
+      <div id="themeDialog" style="display:none" class="dialog">
+        <h4>Create a New Custom Theme</h4>
+        <div onClick="STXDialogManager.dismissDialog()" class="btn icon close"><span class="close">Close</span></div>
+        <div class="settings">
+          <ul>
+            <li class="heading">Chart Style</li>
+            <li>
+              <div class="heading">Candles</div>
+              <div class="data">
+                <div class="color stx_candle_up"><span></span></div>
+                <div class="color stx_candle_down"><span></span></div>
+              </div>
+            </li>
+            <li>
+              <div class="heading"><input id="candleBordersOn" type="checkbox" checked> Border</div>
+              <div class="data">
+              	<div class="border stx_candle_up"><span></span></div>
+              	<div class="border stx_candle_down"><span></span></div>
+              </div>
+            </li>
+            <li>
+              <div class="heading">Line/Bar/Wick</div>
+              <div class="data">
+                <div class="color stx_candle_shadow"><span></span></div>
+              </div>
+            </li>
+          </ul>
+          <ul>
+            <li class="heading">Background</li>
+            <li>
+              <div class="heading">Background</div>
+              <div class="data">
+                <div class="color backgroundColor"><span></span></div>
+              </div>
+            </li>
+            <li>
+              <div class="heading">Grid Lines</div>
+              <div class="data">
+                <div class="color stx_grid"><span></span></div>
+              </div>
+            </li>
+            <li>
+              <div class="heading">Date Dividers</div>
+              <div class="data">
+                <div class="color stx_grid_dark"><span></span></div>
+              </div>
+            </li>
+            <li>
+              <div class="heading">Axis Text</div>
+              <div class="data">
+                <div class="color stx_xaxis_dark"><span></span></div>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <label class="themeName" for="themeName">New Theme Name:</label><input type="text" id="themeName" name="themeName" autocapitalize="off" autocorrect="off" spellcheck="off">
+        <div onClick="STXThemeManager.saveTheme($$('themeName').value, stxx);STXDialogManager.dismissDialog()" class="btn">Save Theme</div>
+      </div>
+    </div>
+
+    <div id="chartContainer" style="height: 460px;">  <!-- This is the container for the chart itself. This div will be passed in to the STXChart object. You may place this anywhere on your page. -->
+       <!--
+		                  IE8 is supported through the excanvas.js library. For IE8, canvas elements must be included in the html
+		                  code itself. The library will clone these canvases internally. If you don't plan on supporting IE8 you
+		                  can safely remove these elements.
+		                  --> 
+        <!--[if IE 8]><canvas id="ie8canvas" width="0" height="0" style="display:none"></canvas>
+		<![endif]--> 
+        <!--[if IE 8]><canvas id="ie8canvasTemp" width="0" height="0" style="display:none"></canvas>
+		<![endif]--> 
+		      
+      </div>
+</div>
+
+<!--[if !IE 8]><!--><script src="stxThirdParty.js"></script><!--<![endif]--><!-- W3C intl support. Use this until browsers have internal support for ECMA-402. Not compatible with IE8 -->
+<!--[if !IE 8]><!--><script src="stxTimeZoneData.js"></script><!--<![endif]-->	<!-- Timezone support, JSONP data file -->
+<script src="STX_SAMPLE_DAILY.js"></script>
+<script src="STX_SAMPLE_5MIN.js"></script>
+<script src="STX_SAMPLE_30MIN.js"></script>
+<script src="stx.js"></script>
+<script type="text/javascript" charset="ISO-8859-1" src="stxModulus.js"></script> 
+<script type="text/javascript" charset="ISO-8859-1" src="stxKernelOs.js"></script> 
+<script>
+
+// Declare a STXChart object. This is the main object for drawing charts
+var stxx=new STXChart($$("chartContainer"));
+
+// The charting widget defaults to 24 hours of display for intraday charting.
+// Changing the market times is only necessary if you are displaying charts from an exchange with opening and closing periods 
+//stxx.chart.beginHour=9;
+//stxx.chart.beginMinute=30;
+//stxx.chart.endHour=16;
+//stxx.chart.endMinute=0;
+//stxx.translationCallback=STXI18N.translate;
+//STXI18N.setLocale(stxx, "zh");							// Optionally set locale in order to localize dates and numbers.
+
+// This is a sample to demonstrate how the results of the open Yahoo Finance API can be used
+// to generate chart data. Be sure to use the Yahoo Finance symbol format (symbology) in the input box
+function convertYahooResults(quotes){
+	if(quotes && quotes.length==0) return;
+	for(var i=0;i<quotes.length;i++){
+		quotes[i].Open=parseFloat(quotes[i].Open);
+		quotes[i].Close=parseFloat(quotes[i].Close);
+		quotes[i].High=parseFloat(quotes[i].High);
+		quotes[i].Low=parseFloat(quotes[i].Low);
+		quotes[i].Volume=parseFloat(quotes[i].Volume);
+		quotes[i].Adj_Close=parseFloat(quotes[i].Adj_Close);
+	}
+	if(quotes.length>1){	// Weird Yahoo thing where they give duped bars after hours
+		if(quotes[quotes.length-1].Date==quotes[quotes.length-2].Date){
+			quotes.pop();
+		}
+	}
+}
+
+// Callback function for Yahoo API
+function cbfunc(yqlResult){
+	var count=yqlResult.query.count;
+	if(count>0){
+		enableStreaming=false;
+		var quotes=yqlResult.query.results.quote;
+		quotes.reverse();
+		convertYahooResults(quotes);
+		stxx.newChart($$("symbol").value, quotes);
+	}
+}
+
+// Example of how to retrieve data from Yahoo API. This utilizes so called JSONP concept. Note that Yahoo API is not
+// always available. This code does not error check and so a user may simply experience nothing if the Yahoo API
+// is down. Do not use in production without adding code to detect "unavailable" responses from Yahoo.
+var seq=0;	// Use a sequential counter to prevent IE from caching Yahoo script
+function getYahooQuotes(symbol){
+	var today=new Date();
+	var curr_date = today.getDate();
+	if(curr_date<10) curr_date="0" + curr_date;
+	var curr_month = today.getMonth()+1;
+	if(curr_month<10) curr_month="0" + curr_month;
+	var curr_year = today.getFullYear();
+
+	var yyyymmdd=curr_year + "-" + curr_month + "-" + curr_date;
+	var yyyymmdd2=(curr_year-1) + "-" + curr_month + "-" + curr_date;
+	var url="http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.historicaldata%20where%20symbol%3D'" + symbol + "'%20and%20startDate%3D'" + yyyymmdd2 + "'%20and%20endDate%3D'" + yyyymmdd + "'&format=json&diagnostics=true&env=http%3A%2F%2Fdatatables.org%2Falltables.env&callback=cbfunc" + "&seq=" + seq++;
+	var newScript=document.createElement("script");
+	$$("loading").style.display="block";
+	newScript.src=url;
+	newScript.onload=function(){
+		$$("loading").style.display="none";
+	};
+	newScript.onerror=function(){
+		$$("loading").style.display="none";		
+	};
+	document.body.appendChild(newScript);
+}
+
+
+/*
+ * A very simple loop for updating the chart with streaming data
+ */
+var enableStreaming=false;
+function updateChartLoop(){
+	fetchRealTimeTick(stxx.symbol, stxx.layout.interval, function(tick){
+		if(!enableStreaming) return;
+		stxx.appendMasterData([tick]);
+		setTimeout(updateChartLoop, 250);
+	});
+}
+
+/*
+* Dummy data for streaming example. Erase this after you implement streaming charts.
+*/
+var streamingData=[
+{Date:null,Open:155.43,High:155.44,Low:155.39,Close:155.4,Volume:466380},
+{Date:null,Open:155.41,High:155.48,Low:155.4,Close:155.46,Volume:466480},
+{Date:null,Open:155.45,High:155.55,Low:155.43,Close:155.5,Volume:466580},
+{Date:null,Open:155.49,High:155.51,Low:155.41,Close:155.41,Volume:466680},
+{Date:null,Open:155.41,High:155.49,Low:155.38,Close:155.47,Volume:466780},
+{Date:null,Open:155.47,High:155.5,Low:155.44,Close:155.45,Volume:466880},
+{Date:null,Open:155.45,High:155.47,Low:155.43,Close:155.46,Volume:500},
+{Date:null,Open:155.47,High:155.5,Low:155.44,Close:155.48,Volume:1000},
+{Date:null,Open:155.49,High:155.49,Low:155.46,Close:155.47,Volume:30000},
+{Date:null,Open:155.47,High:155.53,Low:155.46,Close:155.51,Volume:100000},
+{Date:null,Open:155.51,High:155.52,Low:155.45,Close:155.47,Volume:3000},
+{Date:null,Open:155.46,High:155.47,Low:155.37,Close:155.41,Volume:50000},
+{Date:null,Open:155.41,High:155.42,Low:155.38,Close:155.41,Volume:100000},
+{Date:null,Open:155.41,High:155.46,Low:155.4,Close:155.45,Volume:400000},
+{Date:null,Open:155.32,High:155.48,Low:155.3,Close:155.41,Volume:500000}
+];
+var streamCounter=0;
+var startTick=strToDateTime("2013-03-20 13:40");
+var currentTick=startTick;
+var streamStartTime=new Date().getTime();
+
+/*
+* Modify or replace this entire function to get an updated tick if you plan to support streaming charts
+*/
+function fetchRealTimeTick(symbol, interval, cb){
+
+	var newTick=clone(streamingData[streamCounter++]);
+	if(streamCounter==streamingData.length) streamCounter=0;
+	var nextTickTime=STXMarket.nextPeriod(currentTick, stxx.layout.interval, 1, stxx);
+	var now=new Date(startTick.getTime()+(new Date().getTime()-streamStartTime));
+	if(now.getTime()>=nextTickTime.getTime()){
+		newTick.Date=yyyymmddhhmm(nextTickTime);
+		currentTick=nextTickTime;
+	}else{
+		newTick.Date=yyyymmddhhmm(currentTick);
+	}
+	cb(newTick);
+}
+
+
+/*
+ * Modify or replace this function to fetch your market data!
+ */
+
+function fetchMyData(symbol, interval, cb){
+	var myData=null;
+	if(interval=="day" || interval=="week" || interval=="month"){
+		myData=sampleData;
+	}else if(interval==5){
+		myData=sample5min;
+	}else if(interval==30){
+		myData=sample30min;
+	}
+	cb(myData);
+}
+
+// There is a distinction between end of day intervals (day, week, month) and intraday intervals.
+// Your periodicity function may be more complex and should load the appropriate time series data
+// based on the user's selection. Note that weekly and monthly data are calculated automatically from daily
+// data if enough of it is supplied with a query. Add any additional intervals that you support to the displayMap
+function changePeriodicity(newInterval){
+	var displayMap={
+			"day":{"1":"1D"},
+			"week":{"1":"1W"},
+			"month":{"1":"1M"},
+			"5":{"1":"5m"},
+			"30":{"1":"30m"}
+	};
+	var symbol=stxx.symbol;
+	if(isNaN(newInterval)){	// numeric intervals are intraday, non-numeric are daily, weekly or monthly
+		fetchMyData(symbol, newInterval, function(data){
+			enableStreaming=false;
+			stxx.setPeriodicityV2(1, newInterval);// weekly & monthly charts can be built automatically using daily data, just pass in "week" or "month" for the interval
+			stxx.newChart(symbol, data);
+			$$$("#periodBtn").childNodes[0].data=displayMap[newInterval][1];
+		});
+	}else{
+		fetchMyData(symbol, newInterval, function(data){
+			enableStreaming=true;
+			stxx.setPeriodicityV2(1, newInterval);
+			stxx.newChart(symbol, data);
+			$$$("#periodBtn").childNodes[0].data=displayMap[newInterval][1];
+			updateChartLoop();
+		});
+	}
+}
+
+/*
+ * Initial function that is called when chart loads. If you want the chart to default to a security, or if you're passing a security in with a query string then load it here
+*/
+function displayChart(){
+	var symbol="SPY";
+	fetchMyData(symbol, "day", function(data){
+		stxx.newChart(symbol, data);
+		stxx.setPeriodicityV2(1, "day");
+		updateChartLoop();
+	});
+}
+
+/*
+ * Modify the components in this function to establish the behavior of your UI.
+ */
+function runSampleUI(){
+	STXThemeManager.builtInThemes={
+			"Light":"stx-demo-theme-1.css",
+			"Dark":"stx-demo-theme-2.css"
+	};
+	// Set up menu manager
+	STXMenuManager.makeMenus();
+	STXMenuManager.registerChart(stxx);
+
+	STXThemeManager.setThemes(JSON.parse(STXStorageManager.get("themes")), stxx);
+	STXThemeManager.themesToMenu($$("customThemeSelector"), $$("builtInThemeSelector"), stxx, STXStorageManager.callbacker("themes"));
+
+	STXDrawingToolbar.initialize();
+	STXDrawingToolbar.setVectorType(stxx, null);
+
+	STXTimeZoneWidget.initialize(STXStorageManager.get("timezone"), STXStorageManager.callbacker("timezone"));
+	
+	
+	function textCallback(that, txt, filter, clicked){
+		if(clicked){
+			$$$("#symbol").value="";
+		}		// Set up lookup result widget using dummy data you will need to build your own lookup function that returns data in this format!
+		var sampleResults=[
+	 	{symbol:"S",description:"Sprint Corporation", exchange:"NYSE"},
+	 	{symbol:"SPY",description:"SPDR S&amp;P 500 ETF", exchange:"NYSE"},
+	 	{symbol:"^GSPC",description:"SPDR S&amp;P 500", exchange:""},
+	 	{symbol:"CSCO",description:"Cisco Systems, Inc.", exchange:"NASDAQ"},
+	 	{symbol:"SWKS",description:"Skyworks Solutions Inc.", exchange:"NASDAQ"},
+	 	{symbol:"GLD",description:"SPDR Gold Shares", exchange:"NYSE"},
+	 	{symbol:"WMT",description:"Wal-Mart Stores Inc.", exchange:"NYSE"},
+	 	{symbol:"SLV",description:"iShares Silver Trust", exchange:"NYSE"},
+	 	{symbol:"DDD",description:"3D Systems Corp.", exchange:"NYSE"},
+	 	{symbol:"GS",description:"The Goldman Sachs Group, Inc.", exchange:"NYSE"},
+	 	{symbol:"USDAUD",description:"US Dollar Australian Dollar", exchange:"FX"},
+	 	{symbol:"USDBRL",description:"US Dollar Brazilian Real", exchange:"FX"}
+	 	];
+		that.displayResults(sampleResults); // Display the results in the drop down
+		
+		/*
+		// this is sample code for enabling suggestive search using an ajax query
+		// have your server return a JSON object in the format of sampleResults above
+		function processSearchResults(that){
+			return function(status, results){
+				if(status==200){
+					that.displayResults(JSON.parse(results));
+				}
+			};
+		}
+		var url="http://yourdomain.com?search=" + txt + "&filter" = filter;
+		postAjax(url, null, processSearchResults(that));
+		*/
+	}
+	
+	function selectCallback(that, symbol, filter){
+		getYahooQuotes(symbol);		// Instead of getting quotes from yahoo, replace this with a function to get quotes from your data source.
+	}
+	
+	var config={
+		input: $$$("#symbol"),
+		textCallback: textCallback,			// If you don't have a symbol lookup then just leave this blank
+		selectCallback: selectCallback,
+		filters:["ALL","STOCKS","FOREX","INDEXES"]	// Change these filters to the security types that you support
+	};
+	stxLookupWidget=new STXLookupWidget(config);
+	stxLookupWidget.init();
+	
+
+}
+
+/*
+ * Everything from here on is code to support the stx-demo.html user interface. You should not need to modify this code.
+ */
+function createStudy(){
+	STXStudies.go($$("studyDialog"), stxx);
+}
+
+function createVolumePanel(){
+	if(stxx.panelExists("vchart")) return;
+	stxx.createPanel("Volume", "vchart", 100);
+	stxx.draw();
+}
+
+function toggleVolumeUnderlay(){
+	stxx.setVolumeUnderlay(!stxx.layout.volumeUnderlay);
+}
+
+function toggleLog(){
+	stxx.layout.semiLog=!stxx.layout.semiLog;
+	stxx.draw();
+	stxx.changeOccurred("layout");
+	stxx.doDisplayCrosshairs();
+}
+
+// Indirection function for creating the study dialog.
+function studyDialog(obj, study){
+	if(!stxx || stxx.chart.dataSet.length==0) return;
+	$$("studyDialog").querySelectorAll(".title")[0].innerHTML=obj.innerHTML;
+	STXStudies.studyDialog(stxx, study, $$("studyDialog"));
+	STXDialogManager.displayDialog("studyDialog");
+}
+
+function prependHeadsUpHR(){
+	var tick=Math.floor((STXChart.crosshairX-this.chart.left)/this.layout.candleWidth);
+	var prices=this.chart.xaxis[tick];
+	
+	$$("huOpen").innerHTML="";
+	$$("huClose").innerHTML="";
+	$$("huHigh").innerHTML="";
+	$$("huLow").innerHTML="";
+	$$("huVolume").innerHTML="";
+	if(prices!=null){
+		if(prices.data){
+			$$("huOpen").innerHTML=this.formatPrice(prices.data.Open);
+			$$("huClose").innerHTML=this.formatPrice(prices.data.Close);
+			$$("huHigh").innerHTML=this.formatPrice(prices.data.High);
+			$$("huLow").innerHTML=this.formatPrice(prices.data.Low);
+			$$("huVolume").innerHTML=condenseInt(prices.data.Volume);
+		}
+	}
+}
+
+STXChart.prototype.prepend("headsUpHR", prependHeadsUpHR);
+
+
+function resizeContainers(){
+    if(STX.ipad && STX.isIOS7){
+    	// IOS7 bug in landscape mode doesn't report the pageHeight correctly. The fix is to fix the height
+    	// in css and then adjust the body height to the new size
+    	STX.appendClassName($$$("html"),"ipad ios7");
+    	$$$("body").style.height=pageHeight()+"px";
+    }
+
+	var chartContainer=$$("chartContainer");
+	var chartArea=$$$(".stx-wrapper");
+	var sidePanel=$$$(".stx-panel-side");
+	var panelWidth=0;
+	if(sidePanel && sidePanel.offsetLeft){
+		panelWidth=chartArea.offsetWidth-sidePanel.offsetLeft;
+	}
+	
+	chartContainer.style.width=(chartArea.offsetWidth-panelWidth)+"px";
+	
+	var bottomMargin=0;
+	if($$$(".stx-footer")) bottomMargin=$$$(".stx-footer").offsetHeight;
+
+	chartContainer.style.height=(pageHeight()-getPos(chartContainer).y - bottomMargin) + "px";
+	chartArea.style.height=(pageHeight()-getPos(chartArea).y - bottomMargin) + "px";
+	
+	if(stxx && stxx.chart.canvas!=null){
+		stxx.resizeChart();
+	}
+}
+
+function toggleFullScreenMode(){
+	var wrapper=$$$(".stx-wrapper");
+	if(window.fullScreenMode){
+		var rightSide=stxx.chart.maxTicks-stxx.chart.scroll;
+		wrapper.style.position=null;
+		wrapper.style.left=null;
+		wrapper.style.top=null;
+		wrapper.style.width=null;
+		var chartContainer=$$("chartContainer");
+		chartContainer.style.height=chartContainer.style.prevHeight;
+		chartContainer.style.width=chartContainer.style.prevWidth;
+		wrapper.style.height=null;
+		wrapper.style.width=null;
+		stxx.resizeChart();
+		stxx.chart.scroll=stxx.chart.maxTicks-rightSide;
+		stxx.draw();
+	}else{
+		// stx-wrapper must be at the body level of the page for full screen to work
+		// and it must have a z-index greater than anything else on the page
+		wrapper.style.position="absolute";
+		wrapper.style.left="0px";
+		wrapper.style.top="0px";
+		wrapper.style.width="100%";
+		var chartContainer=$$("chartContainer");
+		chartContainer.style.prevHeight=chartContainer.style.height;
+		chartContainer.style.prevWidth=chartContainer.style.width;
+		resizeContainers();
+		stxx.resizeChart();
+		stxx.draw();
+	}
+	window.fullScreenMode=!window.fullScreenMode;
+}
+
+function resizeScreen(){
+	if(stxx && stxx.chart.canvas!=null){
+		if(window.fullScreenMode){
+			resizeContainers();
+		}else{
+			stxx.resizeChart();
+		}
+	}
+}
+
+window.onresize=resizeScreen;
+
+runSampleUI();
+
+
+/* Translate the UI to another language! Use STXI18N.wordLists (Not compatible with IE 8) */
+//STXI18N.language="en";
+//STXI18N.translateUI();
+</script>
+</body>
+</html>
+
+
+
+
+
+

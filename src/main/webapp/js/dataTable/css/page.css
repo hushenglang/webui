@@ -1,0 +1,17 @@
+/*
+ * Pagination
+ */
+.dataTables_paginate {
+	float: right;
+	text-align: right;
+	padding:20px 10px 50px 0;color:#aaa;line-height:22px
+}
+.dataTables_paginate input{
+  text-align: center;
+  width:20px;
+  border:solid #575757 1px
+}
+.paginate_button {
+	float: left;
+	cursor: pointer;margin-left:5px;width:60px;height:20px;line-height:20px;text-align:center;color:#aaa;border:solid #575757 1px
+}

@@ -1,0 +1,57 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<title>DataTables example</title>
+		<link href="./css/jquery.dataTables.css" rel="stylesheet" type="text/css" />
+		<script type="text/javascript" language="javascript" src="./js/jquery.js"></script>
+		<script type="text/javascript" language="javascript" src="./js/jquery.dataTables.js"></script>
+		<script type="text/javascript" language="javascript" src="./js/object2Array.js"></script>
+		<script type="text/javascript" charset="utf-8">
+			/* Data set - can contain whatever information you want */
+			var aDataSet = [
+							{Engine:'Trident',Browser:'Internet Explorer 4.0',    Platform:'Win 95+',         Version:'4',  Grade:'X'},
+							{Engine:'Trident',Browser:'Internet Explorer 5.0',    Platform:'Win 95+',         Version:'5',  Grade:'C'},
+							{Engine:'Trident',Browser:'Internet Explorer 5.5',    Platform:'Win 95+',         Version:'5.5',Grade:'A'},
+							{Engine:'Trident',Browser:'Internet Explorer 6',      Platform:'Win 98+',         Version:'6',  Grade:'A'},
+							{Engine:'Trident',Browser:'Internet Explorer 7',      Platform:'Win XP SP2+',     Version:'7',  Grade:'A'},
+							{Engine:'Trident',Browser:'AOL browser (AOL desktop)',Platform:'Win XP',          Version:'6',  Grade:'A'},
+							{Engine:'Gecko',  Browser:'Firefox 1.0',              Platform:'Win 98+ / OSX.2+',Version:'1.7',Grade:'A'},
+							{Engine:'Gecko',  Browser:'Firefox 1.5',              Platform:'Win 98+ / OSX.2+',Version:'1.8',Grade:'A'},
+							{Engine:'Gecko',  Browser:'Firefox 2.0',              Platform:'Win 98+ / OSX.2+',Version:'1.8',Grade:'A'},
+							{Engine:'Gecko',  Browser:'Firefox 3.0',              Platform:'Win 2k+ / OSX.3+',Version:'1.9',Grade:'A'}
+			];
+			
+			$(document).ready(function() {
+				var data = new Object2Array(
+						/*
+						{	"Engine":function(data){return data},
+							"Browser":function(data){return data},
+							"Platform":function(data){return data},
+							"Version":function(data){return data},
+							"Grade":function(data){return data}
+						}*/
+						["Engine","Browser","Platform","Version","Grade"]
+						
+					).toArrays(aDataSet);
+				$('#dynamic').html( '<table cellpadding="0" cellspacing="0" border="0" class="display" id="example"></table>' );
+				$('#example').dataTable( {
+					"aaData": data,
+					"aoColumns": [
+						{ "sTitle": "Engine" },
+						{ "sTitle": "Browser" },
+						{ "sTitle": "Platform" },
+						{ "sTitle": "Version", "sClass": "center" },
+						{ "sTitle": "Grade", "sClass": "center" }
+					],
+					"bPaginate": false,
+					"bFilter": false,
+					"bInfo": false
+				} );	
+			} );
+		</script>
+	</head>
+	<body>
+		<div id="dynamic"></div>
+	</body>
+</html>

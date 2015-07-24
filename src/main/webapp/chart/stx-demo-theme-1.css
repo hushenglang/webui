@@ -1,0 +1,253 @@
+@charset "UTF-8";
+/* CSS Document */
+
+/* This is a simple sample theme file - detailed information on specific elements see default stylesheet */
+
+
+/* -------------------------------------------------------- NAV BAR -------------------------------------------------------- */
+
+.stx-nav {border-color:#ddd;}
+
+	
+/* ------------------------------------------------------- TOOLBAR ------------------------------------------------------- */
+
+.stx-toolbar {
+	background:#fdfdfd;
+	border-color: #ddd;
+	}
+.stx-toolbar div.btn {
+	background:#fff;
+	border: solid 1px #ddd;
+	color:#7e7e7e;
+}
+.stx-drawing div.stx-draw-settings {border-left:dotted 1px #ddd;}
+.stx-toolbar div.btn:hover {
+	color:#444444;
+	border: solid 1px #c5c5c5;
+	}
+.stx-toolbar div.btn:active {
+	color:#333;
+	}
+.stx-toolbar div.btn.menu > em {border-left:1px dotted #999;}
+.stx-toolbar div.btn.menu:hover > em {border-left:1px dotted #ccc;}
+
+.stx-drawing .color {outline:none;}
+.stx-drawing span.stx-line {border-color:#666;}
+
+.huLabel {color: #b2b2b2;}
+.huField {color: #666666;}
+
+.btn#shareBtn { 
+	opacity: 1;
+	border-color:rgba(0,0,0,.1);
+	}
+
+/* ------------------------------------------------------- CHART ------------------------------------------------------- */
+
+#chartContainer {
+	background:#fff;
+	border-color:#ddd;
+}
+#iconsTitle {
+	background-color:#999;
+	color:white;
+}
+.btn > span.up, .btn > span.up:active {background-position: -120px -40px;}
+.btn > span.down, .btn > span.down:active {background-position: -80px -40px;} 
+.btn > span.focus, .btn > span.focus:active {background-position: -40px -40px;} 
+.btn > span.close, .btn > span.close:active {background-position: -160px -40px;} 
+.btn > span.trash, .btn > span.trash {background: -240px -40px;}
+
+#chartSize .minus {background-position: -40px -160px;}
+#chartSize .plus {background-position: -80px -160px;}
+
+
+/* --------------------------------------------------------- CHART ELEMENT STYLES --------------------------------------------------------- */
+
+.hd, .vd {
+	background-color:#333;
+	color:white;
+}
+
+.stx_xaxis {color: #666;}
+.stx_xaxis_dark {color: #444444;}
+.stx_yaxis{color:#333;}
+
+.stx_panels {color: white;}
+.stx_panel_background {color:#7c878b;}
+.stx_panel_drag{color:#666;}
+.stx_panel_border{color:#cccccc;}
+
+.stx_crosshair {background-color:#999;}
+.stx_crosshair_drawing {background-color:#333;}
+
+.stx_line_chart{color:#000000;}
+
+.stx_highlight_vector{}
+
+.stx_grid{color:#efefef; opacity:1;}
+.stx_grid_dark{color:#cccccc; opacity:.9;}
+
+.stx_candle_shadow{color:#2e383b;}
+.stx_candle_down{
+	color:#b82c0c;
+	border-color:#000000;
+}
+.stx_candle_up{
+	color:#8cc176;
+	border-color:#000000;
+}
+.stx_hollow_candle_down{color:#b82c0c;}
+.stx_hollow_candle_up{color:#8cc176;}
+
+.stx_bar_down{color:#b82c0c;}
+.stx_bar_up{color:#8cc176;}
+
+.stx_volume_up{color:#8cc176;}
+.stx_volume_down{color:#b82c0c;}
+
+.stx_volume_underlay{
+	color:#000000;
+	opacity:.1;
+}
+.stx_projection{color:black;}
+.stx_projection_new{color:blue;}
+
+.stx_solo_lit{
+	background-color:#b1b7b8;
+	color:#ffffff;
+}
+.stx_histogram{
+	color:#000;
+	opacity:.2;
+}
+
+.stx_current_hr_up{background-color:#8cc176;}
+.stx_current_hr_down{background-color:#b82c0c;}
+
+.btn.icon.stx_solo_lit {background:none;}
+
+/* ------------------------------------------------------- SIDE PANELS ------------------------------------------------------- */
+
+.stx-panel-side {
+	background:#fdfdfd;
+	border-color:#ddd;
+	}
+#stxWatch h4 {color: #000;}
+
+/* New List + Next/Prev Buttons */
+#stxWatch a#stxNewWatchList,
+#stxWatch a#stxWatchNext, #stxWatch a#stxWatchPrev,
+#stxWatch a#stxWatchNext.false, #stxWatch a#stxWatchPrev.false,
+#stxWatch a#stxWatchNext.false:hover, #stxWatch a#stxWatchPrev.false:hover {
+	color:#6e7578;
+	background:#f9f9f9;
+	border-color: #ddd;
+}
+#stxWatch a#stxNewWatchList:hover,
+#stxWatch a#stxWatchNext:hover, #stxWatch a#stxWatchPrev:hover {
+	border-color:#ccc;
+	color:#333;
+}
+
+/* Scrollable Lists Area */
+#stxWatch .watchListScroller {border-color:#ddd;}
+#stxWatch #stxWatchLists ul li div {color: #666;}
+#stxWatch #stxWatchLists ul li div:hover {color: #000;}
+#stxWatch #stxWatchLists ul li.current {background:#F6F6F6;}
+#stxWatch #stxWatchLists ul li div:active, 
+#stxWatch #stxWatchLists ul li.current div {color: #000;}
+#stxWatch #stxWatchLists ul li.current div.edit {background:url(chart/stx-sprite.png) -218px -118px no-repeat;}
+#stxWatch #stxWatchLists ul li.current div.delete {background:url(chart/stx-sprite.png) -258px -118px no-repeat;}
+
+/* Watchlist Symbol Up Down Controls */
+#stxWatchUp i.arrow,
+#stxWatchDown i.arrow,
+#stxWatchUp.false:hover i.arrow,
+#stxWatchDown.false:hover i.arrow {border-color:#ccc;}
+#stxWatchUp:hover i.arrow,
+#stxWatchDown:hover i.arrow {border-color:#666;}
+
+#stxWatchUp {
+	background: rgba(253,253,253,1);
+	background: -moz-linear-gradient(top, rgba(253,253,253,1) 0%, rgba(253,253,253,1) 50%, rgba(253,253,253,0) 100%);
+	background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(253,253,253,1)), color-stop(50%, rgba(253,253,253,1)), color-stop(100%, rgba(253,253,253,0)));
+	background: -webkit-linear-gradient(top, rgba(253,253,253,1) 0%, rgba(253,253,253,1) 50%, rgba(253,253,253,0) 100%);
+	background: -o-linear-gradient(top, rgba(253,253,253,1) 0%, rgba(253,253,253,1) 50%, rgba(253,253,253,0) 100%);
+	background: -ms-linear-gradient(top, rgba(253,253,253,1) 0%, rgba(253,253,253,1) 50%, rgba(253,253,253,0) 100%);
+	background: linear-gradient(to bottom, rgba(253,253,253,1) 0%, rgba(253,253,253,1) 50%, rgba(253,253,253,0) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fdfdfd', endColorstr='#fdfdfd', GradientType=0 );
+}
+#stxWatchDown {
+	background: rgba(253,253,253,0);
+	background: -moz-linear-gradient(top, rgba(253,253,253,0) 0%, rgba(253,253,253,1) 50%, rgba(253,253,253,1) 100%);
+	background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(253,253,253,0)), color-stop(50%, rgba(253,253,253,1)), color-stop(100%, rgba(253,253,253,1)));
+	background: -webkit-linear-gradient(top, rgba(253,253,253,0) 0%, rgba(253,253,253,1) 50%, rgba(253,253,253,1) 100%);
+	background: -o-linear-gradient(top, rgba(253,253,253,0) 0%, rgba(253,253,253,1) 50%, rgba(253,253,253,1) 100%);
+	background: -ms-linear-gradient(top, rgba(253,253,253,0) 0%, rgba(253,253,253,1) 50%, rgba(253,253,253,1) 100%);
+	background: linear-gradient(to bottom, rgba(253,253,253,0) 0%, rgba(253,253,253,1) 50%, rgba(253,253,253,1) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fdfdfd', endColorstr='#fdfdfd', GradientType=0 );
+	}
+
+/* Watchlist Symbols */
+#stxWatch #stxWatch-symbols ul li {color:#838383;}
+#stxWatch #stxWatch-symbols ul li:hover {color:#333;}
+#stxWatch #stxWatch-symbols ul li:active, #stxWatch #stxWatch-symbols ul li.current {
+	color: #000;
+	background:#F6F6F6;
+}
+#stxWatch #stxWatch-symbols ul li:active {background: rgba(0, 0, 0, 0.05);}
+
+/* CIQ Action Area */
+.ciq #stxWatch #action {border-color:#ddd;}	
+.ciq #stxWatch #stxWatchSymbol {color: #333;}
+.ciq #stxWatch a#stxWatchNext i.arrow, 
+.ciq #stxWatch a#stxWatchPrev i.arrow
+.ciq #stxWatch a#stxWatchNext.false:hover i.arrow, 
+.ciq #stxWatch a#stxWatchPrev.false:hover i.arrow {
+	border-color: #999;
+}
+.ciq #stxWatch a#stxWatchNext:hover i.arrow, 
+.ciq #stxWatch a#stxWatchPrev:hover i.arrow {
+	border-color: #000;
+}
+
+
+
+
+/* ------------------------------------------------------- VIEWS ------------------------------------------------------- */
+
+.stx-footer {
+	background:#fdfdfd;
+	color:#929292;
+	border-color:#ddd;
+}
+/* New List + Next/Prev Buttons */
+#stxViews h4 {color:#000;}
+#stxViews #stxNewViewBtn.btn {
+	color:#6e7578;
+	background:#f9f9f9;
+	border-color: #ddd;
+}
+#stxViews #stxNewViewBtn.btn:hover  {
+	border-color:#ccc;
+	color:#333;
+}
+#stxViews h4 {box-shadow: 5px 0px 5px rgba(0, 0, 0, .2)}
+#stxViews #stxNewView {box-shadow: -5px 0px 5px rgba(0, 0, 0, .2);}
+#stxViews ul li {color: #666;}
+#stxViews ul li:hover {color: #000;}
+#stxViews ul li.current {
+	background:rgba(0, 0, 0, .05); 
+	color: #000;
+	}
+	
+	
+.stx-master-line-color { /* master line color */
+	color: #4387EE;
+}
+
+.icons .stx-study-label{color:black;}
+
+
+	

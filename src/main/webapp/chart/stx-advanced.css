@@ -1,0 +1,726 @@
+@charset "UTF-8";
+
+/* --------------------------------------------------------- GENERAL STYLES --------------------------------------------------------- */
+
+html,body {
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:12px;
+}
+body {padding:0px 0 0 0;}
+
+a {
+	color:#77bd00;
+	text-decoration:none;
+	transition: color .25s, border .25s;
+	-webkit-transition: color .25s, border .25s;
+	}
+a:hover {
+	color:#65a600;
+	}
+a:active {
+	color:#65a600;
+	}
+	
+/* --------------------------------------------------------- LAYOUT --------------------------------------------------------- */
+
+
+
+.stx-wrapper {width:100%;}
+
+.stx-toolbar {margin-right:40px;}
+
+.stx-panel-side {
+	display:none;
+	position:absolute;
+	width:180px;
+	right:40px;
+	top:96px;
+	bottom:0px;
+	border:none;
+	border-left:solid 1px;
+	border-right:solid 1px;
+	}
+	
+.stx-footer {
+	display:none;
+	position:absolute;
+	bottom:0;
+	left:0px;
+	right:40px;
+	height:40px;
+	border-top:solid 1px;
+	z-index:3
+}
+
+/* Delete following to add space for right hand sibebar toggles */
+.stx-toolbar {margin-right:0px;}
+.stx-panel-side {right:0px;border-right:none;}
+.stx-footer {right:0px;}
+
+
+/* -------------------------------------------------------- NAV BAR -------------------------------------------------------- */
+
+.stx-nav {border:none;}
+.stx-nav #menus {margin-right:8px;}
+
+
+/* Search */
+
+input#symbol {
+	background:#fff;
+	-webkit-box-shadow: inset 0px 1px 2px rgba(0, 0, 0, .2);
+	-moz-box-shadow: inset 0px 1px 2px rgba(0, 0, 0, .2);
+	box-shadow: inset 0px 1px 2px rgba(0, 0, 0, .2);
+	}
+	
+/* Dropdown Menus */
+.menuSelect.periodicity,
+.menuSelect.chart-display,
+.menuSelect.studies,
+.menuSelect.cog {
+    width:150px;
+	top:34px;
+	left:auto;
+	right:auto;
+}
+.menuSelect.periodicity {
+	left:0px;
+    width:80px;
+	}
+.menuSelect.chart-display {
+	right:0px;
+}
+.menuSelect.studies {
+	right:0px; 
+	width:608px;
+	}
+.menuSelect.cog {
+	width:180px;
+	right:0px;
+	}
+.menuSelect.stx-line-style-menu {
+	left:0px;
+	}
+
+/* Chart Comparison */
+.toggle-opt {
+	line-height:normal;
+	border-radius: 3px;
+	background:rgba(0,0,0,.05);
+	box-shadow: inset 0 1px 3px rgba(100, 100, 100, .4);
+	border:solid 1px rgba(0,0,0,.1)
+}
+.toggle-opt div {
+	border-radius:inherit;
+	display:inline-block;
+	width:50%;
+	line-height:28px;
+	text-align:center;
+	cursor:pointer;
+	color:#666;
+}
+.toggle-opt div:first-of-type {
+	border-radius: 3px 0px 0px 3px;
+	float:left;
+	}
+.toggle-opt div:last-of-type {
+	border-radius: 0px 3px 3px 0px;
+	}
+.toggle-opt div:hover {
+	background:rgba(0,0,0,.05);}
+
+.toggle-opt div.true,
+.toggle-opt div.true:hover {
+	border-radius: 3px;
+	color:#999;
+	background:#fff;
+	box-shadow: 1px 0px 2px rgba(100, 100, 100, .4);
+}
+.toggle-opt.sm  {
+	margin:0px auto;
+}
+.toggle-opt.sm div {
+	font-size:11px;
+	line-height:22px;
+}
+.menuSelect.compare {width: 210px;}
+.menuSelect.compare input[type="text"] {
+	float: left;
+	width: 90px;
+	margin-right: 3px;
+	text-transform: uppercase; 
+	border:none;
+    color: #666666;
+    padding: 6px;
+	height:14px;
+	line-height:14px;
+}
+.menuSelect.compare .color {
+	float: left;
+	width: 26px;
+	height:26px;
+	margin-top:1px
+}
+.menuSelect.compare .add .btn {
+	float: right;
+	height: 26px;
+	line-height: 26px;
+	padding: 0px 8px;
+}
+.menuSelect.compare .content.add {
+	height: 38px;
+	padding-bottom:0px;
+	border-bottom: solid 1px #efefef;
+	}
+.menuSelect.compare .content.type {
+	padding-bottom:10px;
+	border-bottom: solid 1px #efefef;
+	}
+.menuSelect.compare .content.stops {border-bottom:0px;padding-bottom:15px;}
+.menuSelect.compare .content.stops .btn {font-size:11px; width:65px;}
+.menuSelect.compare .content.stops .btn:last-child {float: right; margin-left:5px;}
+
+/* Override default width of lookup to make room for commodities */
+.stxResults{
+	width:350px;
+}
+.stxLookupResults{
+	width:350px;	
+}
+.stxLookupSymbols li span:nth-of-type(2){
+	width:165px;
+}
+
+/* ------------------------------------------------------- TOOLBAR ------------------------------------------------------- */
+
+.stx-toolbar {
+	border:none;
+	border-bottom:solid 1px #ddd;
+	}
+
+/* Heads Up */
+.stx-toolbar ul.hu {
+	width:230px;
+	margin-right:90px;
+	}
+#huDate {white-space:nowrap;}
+#toolbarDraw {left:2px;}
+
+
+/* ------------------------------------------------------- SIDE PANELS ------------------------------------------------------- */
+
+/* Watchlist Sidebar Contents */
+#stxWatch {
+	user-select: none;
+	-ms-user-select: none;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	height:100%;
+}
+#stxWatch h4 {
+	display:inline-block;
+	float:left;
+	margin:15px 0 15px 15px;
+	font-weight:normal;
+	font-size:15px;
+}
+#stxWatch a {
+	text-decoration: none;
+	border-bottom:none;
+	cursor: pointer;
+}
+
+/* New List + Next/Prev Buttons */
+#stxWatch a#stxNewWatchList,
+#stxWatch a#stxWatchNext, #stxWatch a#stxWatchPrev,
+#stxWatch a#stxWatchNext.false, #stxWatch a#stxWatchPrev.false,
+#stxWatch a#stxWatchNext.false:hover, #stxWatch a#stxWatchPrev.false:hover {
+	border:solid 1px;
+	padding:0px;
+	-webkit-box-shadow: none;
+	-moz-box-shadow: none;
+	box-shadow: none;
+}
+#stxWatch a#stxNewWatchList:hover,
+#stxWatch a#stxWatchNext:hover, #stxWatch a#stxWatchPrev:hover {
+	border:solid 1px;
+	-webkit-box-shadow: 0px 1px 2px rgba(0, 0, 0, .2);
+	-moz-box-shadow: 0px 1px 2px rgba(0, 0, 0, .2);
+	box-shadow: 0px 1px 2px rgba(0, 0, 0, .2);
+}
+#stxWatch a#stxWatchNext.false, #stxWatch a#stxWatchPrev.false,
+#stxWatch a#stxWatchNext.false:hover, #stxWatch a#stxWatchPrev.false:hover {
+	cursor:default;
+	opacity:.3;
+	}
+
+/* Watchlist Control Arrows */
+#stxWatch i.arrow {
+	display: block;
+	-webkit-transform: rotate(45deg);  /* Saf3.1+, Chrome */
+	-moz-transform: rotate(45deg);  /* FF3.5+ */
+	-ms-transform: rotate(45deg) ;  /* IE9 */
+	-o-transform: rotate(45deg);  /* Opera 10.5 */
+	transform: rotate(45deg) ;
+	filter: progid:DXImageTransform.Microsoft.Matrix(M11=0.7071067811865476, M12=-0.7071067811865475, M21=0.7071067811865475, M22=0.7071067811865476, sizingMethod='auto expand'); /* IE6–IE9 */
+	zoom: 1;
+	transition: border .25s;
+	-webkit-transition: border .25s;
+}
+
+/* New List */
+#stxWatch a#stxNewWatchList {
+	float:right;
+	margin:10px 10px 0 0;
+	height: 25px;
+	width: 25px;
+	font-size:19px;
+	font-weight:bold;
+	line-height: 25px;
+}
+
+
+/* Scrollable Lists Area */
+#stxWatch .watchListScroller {
+	clear:both;
+	height:140px;
+	border-bottom:solid 1px;
+}
+#stxWatch #stxWatchLists {
+	clear:both;
+	overflow: auto;
+}
+#stxWatch #stxWatchLists ul {
+	display: block;
+	margin: 0;
+	padding: 0;
+}
+#stxWatch #stxWatchLists ul li {
+	font-size:11px;
+	display: block;
+	position:relative;
+	margin: 0;
+	padding: 4px 0;
+	text-align:left;
+	clear:both
+}
+#stxWatch #stxWatchLists ul li div {cursor: pointer;}
+#stxWatch #stxWatchLists ul li div:active, 
+#stxWatch #stxWatchLists ul li.current div {font-weight: bold;}
+
+
+/* Watchlist List List-Items */
+#stxWatch #stxWatchLists ul li div.save {display:none}
+#stxWatch #stxWatchLists ul li div.list {
+	margin-left:15px;
+	padding:6px 0;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+#stxWatch #stxWatchLists ul li.current div.list {width:100px;}
+#stxWatch #stxWatchLists ul li.current div.edit,
+#stxWatch #stxWatchLists ul li.current div.delete {
+	display:inline-block;
+	width:30px;
+	height:25px;
+	float:right;
+	opacity:.5
+}
+#stxWatch #stxWatchLists ul li.current div.edit {background:url(stx-sprite.png) -218px -118px no-repeat;}
+#stxWatch #stxWatchLists ul li.current div.delete {background:url(stx-sprite.png) -258px -118px no-repeat;}
+#stxWatch #stxWatchLists ul li.current div.edit:hover,
+#stxWatch #stxWatchLists ul li.current div.delete:hover {
+	opacity:.8
+}
+
+
+/* Action Area */
+#stxWatch #action {display:none}
+
+
+/* Watchlist Symbol Up Down Controls */
+#stxWatchUp,
+#stxWatchDown {
+	position:relative;
+	display:block;
+	height:50px;
+	text-align:center;
+	overflow:hidden;
+	z-index:2
+}
+#stxWatchUp .arrow,
+#stxWatchDown .arrow {
+	width: 18px;
+	height: 18px;
+	border:3px solid;
+}
+#stxWatchUp .arrow {
+	margin:20px auto;
+	border-right:none;
+	border-bottom:none;
+}
+#stxWatchDown .arrow {
+	margin:5px auto;
+	border-top:none;
+	border-left:none;
+}
+#stxWatchUp.false .arrow,
+#stxWatchDown.false .arrow {
+	opacity:.2;
+	cursor:default
+}
+
+
+/* Watchlist Symbols */
+
+#symbolScroller {
+	margin-top:-50px;
+	margin-bottom:-50px;
+	z-index:1;
+	}
+
+#stxWatch #stxWatch-symbols {
+	overflow: auto;
+}
+#stxWatch #stxWatch-symbols ul {
+	display: block;
+	margin: 0;
+	padding: 0;
+}
+#stxWatch #stxWatch-symbols ul li {
+	padding: 11px 2px 11px 2px;
+	font-size: 11px;
+	font-weight: bold;
+	text-align: center;
+	cursor: pointer;
+}
+#stxWatch #stxWatch-symbols ul li:first-of-type {margin-top:50px;}
+#stxWatch #stxWatch-symbols ul li:last-of-type {margin-bottom:50px;}
+
+/* Optional state Control */
+#stxWatch.false #stxEditWatchList,
+#stxWatch.false #stxDeleteWatchList{ }
+
+#stxWatch.true #stxEditWatchList,
+#stxWatch.true #stxDeleteWatchList{}
+
+#stxWatch a#stxEditWatchList {visibility:hidden}
+#stxWatch a#stxDeleteWatchList {visibility:hidden}
+
+
+/* CIQ Watchlist Add/Remove Tabs */
+.ciq #stxWatch #stxWatchLists ul li.current div.list {width:85px;}
+.ciq #stxWatch #stxWatchLists ul li div.save, 
+.ciq #stxWatch #stxWatchLists ul li div.true, 
+.ciq #stxWatch #stxWatchLists ul li div.false, 
+.ciq #stxWatch #stxWatchLists ul li div.locked, 
+.ciq #stxWatch #stxWatchLists ul li div.neither {
+	display: inline-block;
+	height: 25px;
+	width: 27px;
+	background-image: url(ciq-ico-watch-save.png);
+	background-size: 27px 108px;
+	background-repeat: no-repeat;    
+	background-position: 0 -54px;
+	float: left;
+	margin-left: -5px;
+	margin-right: 6px;
+	cursor: pointer;
+}
+.ciq #stxWatch #stxWatchLists ul li:last-child div.save, 
+.ciq #stxWatch #stxWatchLists ul li:only-child div.save {
+	border-bottom: none;
+}
+.ciq #stxWatch #stxWatchLists ul li div.locked, 
+.ciq #stxWatch #stxWatchLists ul li div.neither {
+	cursor: default;
+}
+.ciq #stxWatch #stxWatchLists ul li div.neither {
+	background-position: 0 0;
+}
+.ciq #stxWatch #stxWatchLists ul li div.true {
+	background-position: 0 -27px;
+}
+.ciq #stxWatch #stxWatchLists ul li div.false {
+	background-position: 0 -54px;
+}
+.ciq #stxWatch #stxWatchLists ul li div.locked {
+	background-position: 0 -81px;
+}
+.ciq #stxWatch #stxWatchLists ul li div.list {
+	margin-left:30px;
+}
+
+
+/* New Dialog */
+#stxWatchEditDialog {width:375px;}
+#stxWatchEditDialog h4 {
+    display: inline;
+	margin:0px;
+}
+input#stxWatchEditName {
+    margin-left: 5px;
+    width: 226px;
+}
+#stxWatchEditDialog div.textarea {
+    border-top: 1px solid #ddd;
+    margin: 10px 0;
+    padding-top: 10px;
+}
+textarea#stxWatchEditTA {
+    height: 100px;
+    padding: 10px;
+    width: 352px;
+}
+
+/* CIQ Action Area */
+.ciq #stxWatch #action {
+	display:block;
+	position: relative;
+	clear:both;
+	padding: 10px 0 10px 0;
+	margin:0;
+	text-align: center;
+	overflow: hidden;
+	border-bottom:solid 1px #ddd;
+}
+.ciq #stxWatch #controls {
+	position: relative;
+	overflow: hidden;
+}
+.ciq #stxWatch #stxWatchSymbol {
+	display: inline-block;
+	margin: 0;
+	font-size: 14px;
+	line-height:32px;
+	width: 80px;
+	overflow: hidden;
+}
+.ciq #stxWatch a#stxWatchNext, #stxWatch a#stxWatchPrev,
+.ciq #stxWatch a#stxWatchNext.false:hover, #stxWatch a#stxWatchPrev.false:hover {
+	position: absolute;
+	width: 30px;
+	height: 30px;
+	line-height: 27px;
+	top: 0px;
+}
+.ciq #stxWatch a#stxWatchPrev {left: 10px;}
+.ciq #stxWatch a#stxWatchNext {right: 10px;}
+
+.ciq #stxWatch #controls i.arrow {
+	width: 7px;
+	height: 7px;
+	border:2px solid;
+}
+.ciq #stxWatch a#stxWatchNext i.arrow {
+	margin:10px 0 0 8px;
+	border-bottom:none;
+	border-left:none;
+}
+.ciq #stxWatch a#stxWatchPrev i.arrow {
+	margin:10px 0 0 12px;
+	border-top:none;
+	border-right:none;
+}
+
+
+/* ------------------------------------------------------- BOTTOM BAR ------------------------------------------------------- */
+
+.btn#shareBtn { 
+	position: absolute;
+	top: 8px;
+	right: 10px;
+	border-color:rgba(0,0,0,.1);
+	background: rgba(98,108,116,.45);
+	color:#fff;
+	font-size:12px;
+	text-shadow: 0 1px 0px rgba(0,0,0,.2);
+	margin: 0px;
+	padding: 0 4px 0 10px;
+	transition: color .25s, border .25s, background .25s, box-shadow .25s;
+	-webkit-transition: color .25s, border .25s, background .25s, box-shadow .25s;
+}
+.btn#shareBtn:hover{
+	background: rgba(98,108,116,.7);
+	-webkit-box-shadow: 0px 1px 1px rgba(0, 0, 0, .1), inset 0px 10px 10px rgba(255, 255, 255, .2);
+	-moz-box-shadow: 0px 1px 1px rgba(0, 0, 0, .1), inset 0px 10px 10px rgba(255, 255, 255, .2);
+	box-shadow: 0px 1px 1px rgba(0, 0, 0, .1), inset 0px 10px 10px rgba(255, 255, 255, .2);
+}
+.btn#shareBtn:active{
+	-webkit-box-shadow: inset 0px -8px 10px rgba(255, 255, 255, .1);
+	-moz-box-shadow:inset 0px -8px 10px rgba(255, 255, 255, .1);
+	box-shadow: inset 0px -8px 10px rgba(255, 255, 255, .1);
+}
+.btn#shareBtn span {
+	float:right;
+	display:inline-block;
+	width: 25px;
+	height:25px;
+	background:url(stx-sprite.png);
+	background-position: -98px -116px;
+	margin-left:4px;
+}
+.btn.loading#shareBtn {
+	background:#fff;
+	color:#666;
+	text-shadow:none;
+	border-color:#ccc;
+	cursor:default;
+	}
+.btn.loading#shareBtn:hover {
+	-webkit-box-shadow:none;
+	-moz-box-shadow:none;
+	box-shadow:none;
+}
+.btn.loading#shareBtn span {
+	background:url(stx-loading-sm.gif);	
+	cursor:default;
+}
+
+/* Saved Views */
+
+#stxViews { 
+	position:relative;
+	text-align:left;
+	height:40px;
+	overflow:hidden;
+	}
+#stxViews h4 {
+	position:absolute;
+	height:40px;
+	line-height:40px;
+	width:70px;
+	display:inline-block;
+	font-weight:normal;
+	font-size:15px;
+	text-indent:10px;
+	left:0px;
+	top:0px;
+	margin:0;
+	box-shadow: 5px 0px 5px rgba(0, 0, 0, .2)
+	}
+#stxViews #stxNewView {
+	position:absolute;
+	right:0px;
+	top:0px;
+	width:45px;
+	height:40px;
+	box-shadow: -5px 0px 5px rgba(0, 0, 0, .2);
+}
+#stxViews #stxNewViewBtn.btn {
+	position:absolute;
+	right:8px;
+	top:6px;
+	text-align:center;
+	border:solid 1px;
+	height: 25px;
+	width: 25px;
+	font-size:19px;
+	font-weight:bold;
+	line-height: 25px;
+	padding:0px;
+}
+#stxViews #stxNewViewBtn.btn:hover {
+	border:solid 1px;
+	-webkit-box-shadow: 0px 1px 2px rgba(0, 0, 0, .2);
+	-moz-box-shadow: 0px 1px 2px rgba(0, 0, 0, .2);
+	box-shadow: 0px 1px 2px rgba(0, 0, 0, .2);
+}
+
+/* Scrollable Views Area */
+
+
+#stxViews .viewsScroller {
+	position:absolute;
+	left:70px;
+	right:50px;
+	top:0px;
+	height:40px;
+	overflow:hidden;
+}
+#stxSavedViews {
+	height:60px;
+	margin:-10px 0 0 0;
+	overflow:hidden;
+}
+#stxViews ul {
+	display: block;
+	margin: 10px 0 0 0;
+	padding: 0;
+}
+#stxViews ul li {
+	float:left;
+	font-size:11px;
+	line-height:40px;
+	display: inline-block;
+	margin: 0;
+	padding:0px 20px;
+	margin:0px;
+	text-align:left;
+	cursor:pointer;
+}
+#stxViews ul li.current {font-weight: bold;}
+
+#stxViewEditName {width:185px; margin-bottom:10px;}
+
+/* ------------------------------------------------------- Dialogs ------------------------------------------------------- */
+
+#sharedLinkDialog {
+	width:300px;
+	text-align:center;
+	}
+#sharedLinkDialog h4 {
+	font-size:22px;
+	margin:15px 0 15px 0;
+	}
+#sharedLinkDialog .or,
+#sharedLinkDialog p:first-of-type {
+	font-family:Georgia, "Times New Roman", serif;
+	font-style:italic;
+	color:#666
+	}
+#sharedLinkDialog a {
+	font-weight:bold;
+	}
+
+#shareCopyPaste {
+    background: none repeat scroll 0 0 #EFEFEF;
+    border: 1px solid #FFFFFF;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2) inset;
+    color:#484848;
+    display: table-cell;
+    margin-bottom: 20px;
+    padding: 20px;
+    width: 480px;
+
+
+}
+
+/* Timezones*/
+
+#timezoneDialog{text-align:center;}
+#timezoneDialog .title {margin: 0 auto;}
+#timezoneDialogWrapper{border-bottom: solid #CCCCCC 1px;}
+#timezoneDialog .instruct{
+	margin: 10px auto;
+	font-style:italic;
+}
+#timezoneDialog li:hover{background-color:#F0F0F0;}
+
+.stx-stem{
+	border-left: 2px dotted rgba(0,0,0,0.3);
+	width:0;
+}
+
+/* To deal with IOS7 full screen bug */
+@media (orientation:landscape) {
+	html.ipad.ios7 > body {
+			position:fixed;
+			bottom:0;
+			width:100%;
+			height: 672px;
+		}
+	}
+}

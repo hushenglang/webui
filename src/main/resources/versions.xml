@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<versions project="WebUI" manager="Scott" email="scott@222m.net">
+	<record>
+		<version>3.0.16</version>
+		<date>02/03/2015</date>
+		<programmer>Joe</programmer>
+		<module>WebUI</module>
+		<function>WebUI_3.0.16</function>
+		<comment>
+			解决系統故障#6361 "S"账户不能於WebUI进行平仓
+		</comment>
+		<tag></tag>
+	</record>
+	<record>
+		<version>3.0.15</version>
+		<date>07/01/2015</date>
+		<programmer>Joe</programmer>
+		<module>WebUI</module>
+		<function>WebUI_3.0.15</function>
+		<comment>
+			Web UI平台优化（一期）
+			其他的bugfix
+		</comment>
+		<tag></tag>
+	</record>	
+	<record>
+		<version>3.0.14</version>
+		<date>22/12/2014</date>
+		<programmer>Joe</programmer>
+		<module>WebUI</module>
+		<function>WebUI_3.0.14</function>
+		<comment>
+			金道盾二次优化需求
+		</comment>
+		<tag></tag>
+	</record>	
+	<record>
+		<version>3.0.13</version>
+		<date>28/11/2014</date>
+		<programmer>Joe</programmer>
+		<module>WebUI</module>
+		<function>WebUI_3.0.13</function>
+		<comment>
+			新增金道盾二次验证功能
+		</comment>
+		<tag></tag>
+	</record>		
+	<record>
+		<version>3.0.12</version>
+		<date>07/11/2014</date>
+		<programmer>Joe</programmer>
+		<module>WebUI</module>
+		<function>WebUI_3.0.12</function>
+		<comment>
+			新增单点登陆功能, 单点登陆到前台存款相关页面;
+			在线统计从goldapi转移到demoapi;
+		</comment>
+		<tag></tag>
+	</record>		
+	<record>
+		<version>3.0.11</version>
+		<date>17/10/2014</date>
+		<programmer>Wilson</programmer>
+		<module>WebUI</module>
+		<function>WebUI_3.0.11</function>
+		<comment>
+			#20968 白银抽奖活动将延長至11月14日(周五) - 更換WebUI Login Page 1st Banner
+		</comment>
+		<tag></tag>
+	</record>			
+	<record>
+		<version>3.0.10</version>
+		<date>12/09/2014</date>
+		<programmer>Joe</programmer>
+		<module>WebUI</module>
+		<function>WebUI_3.0.10</function>
+		<comment>
+			#20968 WebUI 登錄頁更換BANNER
+		</comment>
+		<tag></tag>
+	</record>
+	<record>
+		<version>3.0.9</version>
+		<date>10/09/2014</date>
+		<programmer>Charles</programmer>
+		<module>WebUI</module>
+		<function>WebUI_3.0.9</function>
+		<comment>
+			1) 即時消息推送接口
+		</comment>
+		<tag></tag>
+	</record>
+	<record>
+		<version>3.0.8</version>
+		<date>22/08/2014</date>
+		<programmer>Joe</programmer>
+		<module>WebUI</module>
+		<function>WebUI_3.0.8</function>
+		<comment>
+			1) 伦敦银三位小数
+			2) 历史报价显示优化
+		</comment>
+		<tag></tag>
+	</record>
+	<record>
+		<version>3.0.7</version>
+		<date>01/08/2014</date>
+		<programmer>Frankie Yu</programmer>
+		<module>WebUI</module>
+		<function>WebUI_3.0.7</function>
+		<comment>
+			demo api 分離
+		</comment>
+		<tag></tag>
+	</record>
+	<record>
+		<version>3.0.6</version>
+		<date>17/07/2014</date>
+		<programmer>Joe, Wilson</programmer>
+		<module>WebUI</module>
+		<function>WebUI_3.0.6</function>
+		<comment>
+			1. WebUI新增历史报价功能;
+			2. #18719 默认蜡烛图大小和指标
+		</comment>
+		<tag></tag>
+	</record>
+	<record>
+		<version>3.0.5</version>
+		<date>26/06/2014</date>
+		<programmer>Joe</programmer>
+		<module>WebUI</module>
+		<function>WebUI_3.0.5</function>
+		<comment>
+			1. WebUI移动端下单窗口位置偏下，导致用户交昴窗口不能完整显示问题修复
+			2. ipad按HOME键退出后再次进入失去连接修改；
+			3. 4084283无法登录WEB　GTS修复
+			4. 修复WebUI界面上的价格跳动1秒种更新一次，而下单界面使用1秒4口的数据
+			5. 移动版登录后提示refresh问题修复
+		</comment>
+		<tag></tag>
+	</record>
+	<record>
+		<version>3.0.4</version>
+		<date>20/06/2014</date>
+		<programmer>Joe</programmer>
+		<module>WebUI</module>
+		<function>WebUI_3.0.4</function>
+		<comment>
+			1.合并webui网页客户端JS文件;
+			2.TOMCAT的配置文件修改,静态资源压缩方式传输;
+			3.其他优化,诸如登陆等
+		</comment>
+		<tag></tag>
+	</record>
+	<record>
+		<version>3.0.3</version>
+		<date>10/06/2014</date>
+		<programmer>Joe</programmer>
+		<module>WebUI</module>
+		<function>WebUI_3.0.3</function>
+		<comment>
+			1.	添加在线统计功能
+		</comment>
+		<tag></tag>
+	</record>
+	<record>
+		<version>3.0.2</version>
+		<date>07/06/2014</date>
+		<programmer>Joe,Wilson,Alan,Ben,Charles,Scott</programmer>
+		<module>WebUI</module>
+		<function>WebUI_3.0.2</function>
+		<comment>
+			1.	配合世界杯活動，WEBUI更新額度報表
+			2.	指標顏色彈出: 如點擊彈出以外，即除消顯示
+			3.	实时动态委托下单时间修改, 改为取服务器当前时间
+			4.	移動版1小時K線X 軸顯示錯誤
+			5.	黑夜模式的CSS有機會顯示錯誤
+		</comment>
+		<tag></tag>
+	</record>
+	<record>
+		<version>3.0.1</version>
+		<date>03/06/2014</date>
+		<programmer>Joe,Wilson,Alan,Ben,Charles,Scott</programmer>
+		<module>WebUI</module>
+		<function>WebUI_3.0.1</function>
+		<comment>WebUI GTS 上線錯誤處理</comment>
+		<tag>WebUI_3.0.1</tag>
+	</record>
+	<record>
+		<version>3.0.0</version>
+		<date>31/05/2014</date>
+		<programmer>Joe,Wilson,Alan,Ben,Charles,Scott</programmer>
+		<module>WebUI</module>
+		<function>WebUI_3.0.0</function>
+		<comment>WebUI GTS需求</comment>
+		<tag>WebUI_3.0.0</tag>
+	</record>
+	<record>
+		<version>2.0.0</version>
+		<date>23/12/2013</date>
+		<programmer>Dream, Alan, Gavin, Gaobe, Helen, Dongfeng, Yanny</programmer>
+		<module>WebUI</module>
+		<function>WebUI_2.0.0</function>
+		<comment>WebUI 信用需求</comment>
+		<tag>N/A</tag>
+	</record>
+	<record>
+		<version>1.0.0</version>
+		<date>20/06/2013</date>
+		<programmer>Johnny, Scott</programmer>
+		<module>WebUI</module>
+		<function>WebUI_1.0.0</function>
+		<comment>WebUI first milestone</comment>
+		<tag>tags/webui_V1.0.0</tag>
+	</record>
+</versions>

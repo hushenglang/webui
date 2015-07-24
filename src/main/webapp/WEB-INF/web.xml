@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app id="webui" version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+
+	<display-name>webui</display-name>
+
+	<!-- rgs config -->
+	<!-- register part -->
+	<servlet>
+		<servlet-name>RGSRegisterServlet</servlet-name>
+		<servlet-class>com.gwghk.rgs.client.core.RgsRegisterServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>RGSRegisterServlet</servlet-name>
+		<url-pattern>/rgs_register</url-pattern>
+	</servlet-mapping>
+	<!-- validate part -->
+	<context-param>
+		<!--the controller which can get rgs_loginname and init the webapp -->
+		<param-name>sessionInitClassPath</param-name>
+		<param-value>web.action.accountadmin.SessionInitComponent</param-value>
+	</context-param>
+	<servlet>
+		<servlet-name>RgsValidateServlet</servlet-name>
+		<servlet-class>com.gwghk.rgs.client.core.RgsAutoLoginServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>RgsValidateServlet</servlet-name>
+		<url-pattern>*.rgs</url-pattern>
+	</servlet-mapping>
+	<!-- end rgs config -->
+
+	<filter>
+		<filter-name>GWShieldFilter</filter-name>
+		<filter-class>web.filter.GWShieldFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>GWShieldFilter</filter-name>
+		<url-pattern>/Home.action</url-pattern>
+	</filter-mapping>
+
+
+	<filter>
+		<filter-name>SetCharacterEncoding</filter-name>
+		<filter-class>web.filter.SetCharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>SetCharacterEncoding</filter-name>
+		<url-pattern>*.action</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>SetCharacterEncoding</filter-name>
+		<url-pattern>*.jsp</url-pattern>
+	</filter-mapping>
+	<!-- <filter> -->
+	<!-- <filter-name>CorsFilter</filter-name> -->
+	<!-- <filter-class>org.apache.catalina.filters.CorsFilter</filter-class> -->
+	<!-- </filter> -->
+	<!-- <filter-mapping> -->
+	<!-- <filter-name>CorsFilter</filter-name> -->
+	<!-- <url-pattern>/*</url-pattern> -->
+	<!-- </filter-mapping> -->
+	<filter>
+		<filter-name>IllegalCharacterFilter</filter-name>
+		<filter-class>web.filter.IllegalCharacterFilter</filter-class>
+		<init-param>
+			<param-name>characterParams</param-name>
+			<!-- 此處加入要過濾的字符或字符串，以逗號隔開 -->
+			<param-value>|,',",‘,(,),+</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>IllegalCharacterFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<filter>
+		<filter-name>struts2</filter-name>
+		<filter-class>org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter</filter-class>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>struts2</filter-name>
+		<url-pattern>*.jsp</url-pattern>
+	</filter-mapping>
+
+	<filter-mapping>
+		<filter-name>struts2</filter-name>
+		<url-pattern>*.action</url-pattern>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>FORWARD</dispatcher>
+	</filter-mapping>
+
+	<filter>
+		<filter-name>NoCacheFilter</filter-name>
+		<filter-class>web.filter.NoCacheFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>NoCacheFilter</filter-name>
+		<url-pattern>/js/webui/*</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>NoCacheFilter</filter-name>
+		<url-pattern>/js/js_i18n/*</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>NoCacheFilter</filter-name>
+		<url-pattern>*.html</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>NoCacheFilter</filter-name>
+		<url-pattern>*.jsp</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>NoCacheFilter</filter-name>
+		<url-pattern>*.action</url-pattern>
+	</filter-mapping>
+
+	<session-config>
+		<session-timeout>60</session-timeout>
+	</session-config>
+	<servlet>
+		<display-name>VerifyCodeServlet</display-name>
+		<servlet-name>VerifyCodeServlet</servlet-name>
+		<servlet-class>web.servlet.VerifyCodeServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>VerifyCodeServlet</servlet-name>
+		<url-pattern>/VerifyCodeServlet</url-pattern>
+	</servlet-mapping>
+
+	<error-page>
+		<error-code>403</error-code>
+		<location>/redirect.html</location>
+	</error-page>
+	<error-page>
+		<error-code>404</error-code>
+		<location>/redirect.html</location>
+	</error-page>
+	<error-page>
+		<error-code>500</error-code>
+		<location>/redirect.html</location>
+	</error-page>
+
+	<listener>
+		<listener-class>web.listener.OnlineStatisticsListener</listener-class>
+	</listener>
+
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+	</welcome-file-list>
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>JSPs</web-resource-name>
+			<url-pattern>/jsp/*</url-pattern><!-- 拒绝直接访问web文件夹下的所有页面 -->
+		</web-resource-collection>
+		<auth-constraint />
+	</security-constraint>
+	<distributable />
+</web-app>

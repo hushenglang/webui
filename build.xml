@@ -1,0 +1,401 @@
+<project name="webui" default="dist" basedir=".">
+	<description>
+  		build file
+	</description>
+	
+	<property name="tomcat" location="/opt/apache-tomcat-7.0.23" />
+	<property name="webpath" location="/web/24kweb" />
+	
+	<property name="src" location="src/main/java" />
+	<property name="resources" location="src/main/resources" />
+	<property name="webapp" location="src/main/webapp" />
+	<property name="build" location="build" />
+	<property name="buildJS" location="buildJS" />
+	<property name="webuiJS" location="${buildJS}/js/webui/" />
+	<property name="dist" location="dist" />
+	
+	<basename property="base.name" file="${basedir}" />
+	<property name="config.path" location="/24k/config/${base.name}" />
+
+	<taskdef resource="net/sf/antcontrib/antcontrib.properties">
+	  <classpath>
+	    <pathelement location="anttask/ant-contrib-0.6.jar"/>
+	  </classpath>
+	</taskdef>
+	
+	<path id="project.lib.path">
+	  <fileset dir="${webapp}/WEB-INF/lib/">
+	  	<include name="*.jar"/>
+	  </fileset>
+	</path>
+	<path id="tomcat.lib.path">
+	  <fileset dir="${tomcat}/lib/">
+	  	<include name="*.jar"/>
+	  </fileset>
+	</path>
+	
+	<target name="init">
+		<tstamp />
+		<mkdir dir="${build}" />
+		<mkdir dir="${webuiJS}" />
+		<mkdir dir="${dist}" />
+		<mkdir dir="${config.path}" />
+	</target>
+	
+	<target name="compile" depends="init" description="compile the source ">
+		<javac srcdir="${src}" destdir="${build}" encoding="UTF-8" source="1.6" target="1.6" 
+			debug="true" debuglevel="lines,vars,source">
+			<classpath refid="project.lib.path"/>
+			<classpath refid="tomcat.lib.path"/>
+		</javac>
+		<copy todir="${build}">
+		    <fileset dir="${src}" excludes="**/*.java"/>
+		</copy>
+		<copy todir="${build}">
+		    <fileset dir="${resources}" >
+		    	<exclude name="**/*.java"/>
+		    	<exclude name="rgsClient.properties"/>
+		    	<exclude name="init.properties"/>
+		    	<exclude name="init-uat.properties"/>
+		    	<exclude name="GoldInterface.properties" />
+		    	<exclude name="GoldInterface-uat.properties" />
+		    </fileset>			
+		</copy>
+		<copy file="${resources}/rgsClient.properties" todir="${config.path}" />
+		<copy file="${resources}/init.properties" todir="${config.path}" />
+		<copy file="${resources}/GoldInterface.properties" todir="${config.path}" />
+		<replace file="${build}/log4j.properties" token="WebUI.log" value="${base.name}.log"/>
+		<replace file="${build}/ConfigLoader.properties" token="WebUI" value="${base.name}"/>
+	</target>
+	
+	<target name="buildJS" depends="compile"  description="Minimizing Javascript files">   
+		
+		<!-- build all-dt.js -->
+		<delete file="${webuiJS}/all-dt.js" />
+		<foreach target="loopjs-dt" param="loopjs.param">
+			<path id="jspath">
+				<!-- third party -->
+				<fileset file="${webapp}/js/lib/jquery-1.11.0.min.js" />
+				<fileset file="${webapp}/js/lib/socket.io.js" />
+				<fileset file="${webapp}/js/js_i18n/deviceCheck.js" />
+				<fileset file="${webapp}/js/lib/jquery-ui-1.9.2.min.js" />
+				<fileset file="${webapp}/js/lib/json2.js" />
+				<fileset file="${webapp}/js/lib/jquery.cookie.js" />
+				<fileset file="${webapp}/js/lib/jquery.roll.js" />
+				<fileset file="${webapp}/js/My97DatePicker/WdatePicker.js"  />
+				<fileset file="${webapp}/js/dataTable/js/jquery.dataTables.min.js"  />
+				<fileset file="${webapp}/js/dataTable/js/object2Array.js"  />
+				<fileset file="${webapp}/js/dataTable/js/page4dataTable.js"  />
+
+				<!-- STX Chart  -->
+				<fileset file="${webapp}/chart/stxDecription.js" />
+				<fileset file="${webapp}/chart/excanvas.js" />
+				<fileset file="${webapp}/chart/iscroll.js" />
+
+				<fileset file="${webapp}/chart/stxThirdParty.js" />
+
+				<fileset file="${webapp}/chart/stx.js" />
+				<fileset file="${webapp}/chart/stxKernelOs.js" />
+				<fileset file="${webapp}/chart/stxModulus.js" />
+
+				<fileset file="${webapp}/chart/stxThirdParty.js" />
+				<fileset file="${webapp}/chart/stxTimeZoneData.js" />
+				
+				<!-- webui -->
+				<fileset file="${webapp}/js/webui/comm/listener-core.js" />
+				<fileset file="${webapp}/js/webui/comm/common-core.js" />
+				<fileset file="${webapp}/js/webui/comm/logger-core.js" />
+				<fileset file="${webapp}/js/webui/comm/globalData-core.js" />
+				<fileset file="${webapp}/js/webui/comm/socketLogin-core.js" />
+				<fileset file="${webapp}/js/webui/comm/util-core.js" />
+				<fileset file="${webapp}/js/webui/news/news-dt.js"  />
+				
+				<!-- 報價 -->
+				<fileset file="${webapp}/js/webui/quotation/Tick-core.js" />
+				<!-- 格子報價 -->
+				<fileset file="${webapp}/js/webui/quotation/Tick2Box-dt.js" />
+				<!-- 列表報價 -->
+				<fileset file="${webapp}/js/webui/quotation/Tick2List-dt.js" />
+				
+				<!-- 校驗  -->
+				<fileset file="${webapp}/js/webui/investment/Validator-core.js"  />
+				<!-- 賬戶倉位  -->
+				<fileset file="${webapp}/js/webui/investment/AccountPositions-core.js"  />
+				<fileset file="${webapp}/js/webui/investment/AccountPositions-dt.js"  />
+				<!-- 賬戶匯總 -->
+				<fileset file="${webapp}/js/webui/investment/AccountSummary-core.js"  />
+				<fileset file="${webapp}/js/webui/investment/AccountSummary-dt.js"  />
+				<!-- 賬戶資金模塊 -->
+				<fileset file="${webapp}/js/webui/accountInfo/accountBaseInfo-core.js"  />
+				<fileset file="${webapp}/js/webui/accountInfo/accountBaseInfo-dt.js"  />
+				
+				<!-- 已平倉部位 -->
+				<fileset file="${webapp}/js/webui/investment/ClosedPosition-dt.js"  />
+				<!-- 當日委託 -->
+				<fileset file="${webapp}/js/webui/investment/PendingOrders-core.js"  />
+				<fileset file="${webapp}/js/webui/investment/PendingOrders-dt.js"  />
+				<!--實時動態  -->
+				<fileset file="${webapp}/js/webui/investment/DynamicUpdates-core.js"  />
+				<fileset file="${webapp}/js/webui/investment/DynamicUpdates-dt.js"  />
+				
+				<!--System Time -->
+				<fileset file="${webapp}/js/webui/investment/SystemTime-dt.js"  />
+				<fileset file="${webapp}/js/webui/investment/SystemConnection-dt.js"  />
+				
+				<!-- chart -->
+				<fileset file="${webapp}/js/webui/chart/Chart-dt.js"  />
+				
+				<fileset file="${webapp}/js/webui/quotation/quotationGTS-dt.js" />
+				<fileset file="${webapp}/js/webui/report/report-dt.js" />
+				
+				<fileset file="${webapp}/js/webui/bulletin/bulletin-dt.js" />
+
+				<fileset file="${webapp}/js/webui/investment/closeCommon-dt.js" />
+				<fileset file="${webapp}/js/webui/investment/marketClose-dt.js" />
+				<fileset file="${webapp}/js/webui/investment/pendingClose-dt.js" />
+
+				<fileset file="${webapp}/js/webui/trade/modifyTradeCommon-dt.js" />
+				<fileset file="${webapp}/js/webui/trade/tradeGlobalData-core.js" />
+				<fileset file="${webapp}/js/webui/trade/market-dt.js" />
+				<fileset file="${webapp}/js/webui/trade/pendingOrder-dt.js" />
+					
+				<fileset file="${webapp}/js/webui/trade/tradeCommon-dt.js" />
+				<fileset file="${webapp}/js/webui/trade/tradeGlobalData-core.js" />
+				<fileset file="${webapp}/js/webui/trade/market-dt.js" />
+				<fileset file="${webapp}/js/webui/trade/pendingOrder-dt.js" />
+			</path>
+	   </foreach> 
+		<echo message="Minimizing JS ${webuiJS}/all-dt.js"/> 
+	    <java jar="anttask/yuicompressor-2.4.8.jar" fork="true">
+	    	<arg value="${webuiJS}/all-dt.js" />
+	        <arg value="-o" />
+	    	<arg value="'.js$:.js'" />
+	    </java>
+		<copy file="${webuiJS}/all-dt.js" tofile="${webapp}/js/webui/all-dt.js" />
+		
+		<!-- build all-dt-ie8.js -->
+		<delete file="${webuiJS}/all-dt-ie8.js" />
+		<foreach target="loopjs-dt-ie8" param="loopjs.param">
+			<path id="jspath">
+				
+				<fileset file="${webapp}/js/webui/start.js" />
+				<!-- third party -->
+				<fileset file="${webapp}/js/lib/jquery-1.11.0.min.js" />
+				<fileset file="${webapp}/js/lib/jquery-ui-1.9.2.min.js" />
+				<fileset file="${webapp}/js/lib/json2.js" />
+				<fileset file="${webapp}/js/lib/jquery.cookie.js" />
+				<fileset file="${webapp}/js/lib/jquery.roll.js" />
+				<fileset file="${webapp}/js/dataTable/js/jquery.dataTables.min.js"  />
+				<fileset file="${webapp}/js/dataTable/js/object2Array.js"  />
+				<fileset file="${webapp}/js/dataTable/js/page4dataTable.js"  />
+				<fileset file="${webapp}/js/lib/socket.io.js" />
+				<fileset file="${webapp}/js/js_i18n/deviceCheck.js" />
+				<!-- webui -->
+				<fileset file="${webapp}/js/webui/comm/listener-core.js" />
+				<fileset file="${webapp}/js/webui/comm/common-core.js" />
+				<fileset file="${webapp}/js/webui/comm/logger-core-prod.js" />
+				<fileset file="${webapp}/js/webui/comm/globalData-core.js" />
+				<fileset file="${webapp}/js/webui/comm/socketLogin-core.js" />
+				<fileset file="${webapp}/js/webui/comm/util-core.js" />
+				<fileset file="${webapp}/js/webui/news/news-dt.js"  />
+				<!-- 報價 -->
+				<fileset file="${webapp}/js/webui/quotation/Tick-core.js" />
+				<!-- 格子報價 -->
+				<fileset file="${webapp}/js/webui/quotation/Tick2Box-dt.js" />
+				<!-- 列表報價 -->
+				<fileset file="${webapp}/js/webui/quotation/Tick2List-dt.js" />
+				<!-- 校驗  -->
+				<fileset file="${webapp}/js/webui/investment/Validator-core.js"  />
+				<!-- 賬戶倉位  -->
+				<fileset file="${webapp}/js/webui/investment/AccountPositions-core.js"  />
+				<fileset file="${webapp}/js/webui/investment/AccountPositions-dt.js"  />
+				<!-- 賬戶匯總 -->
+				<fileset file="${webapp}/js/webui/investment/AccountSummary-core.js"  />
+				<fileset file="${webapp}/js/webui/investment/AccountSummary-dt.js"  />
+				<!-- 賬戶資金模塊 -->
+				<fileset file="${webapp}/js/webui/accountInfo/accountBaseInfo-core.js"  />
+				<fileset file="${webapp}/js/webui/accountInfo/accountBaseInfo-dt.js"  />
+				<!-- 已平倉部位 -->
+				<fileset file="${webapp}/js/webui/investment/ClosedPosition-dt.js"  />
+				<!-- 當日委託 -->
+				<fileset file="${webapp}/js/webui/investment/PendingOrders-core.js"  />
+				<fileset file="${webapp}/js/webui/investment/PendingOrders-dt.js"  />
+				<!--實時動態  -->
+				<fileset file="${webapp}/js/webui/investment/DynamicUpdates-core.js"  />
+				<fileset file="${webapp}/js/webui/investment/DynamicUpdates-dt.js"  />
+				<!--System Time -->
+				<fileset file="${webapp}/js/webui/investment/SystemTime-dt.js"  />
+				<fileset file="${webapp}/js/webui/investment/SystemConnection-dt.js"  />
+				
+				<fileset file="${webapp}/js/webui/quotation/quotationGTS-dt.js" />
+				<fileset file="${webapp}/js/webui/report/report-dt.js" />
+				
+				<fileset file="${webapp}/js/webui/bulletin/bulletin-dt.js" />
+
+				<fileset file="${webapp}/js/webui/investment/closeCommon-dt.js" />
+				<fileset file="${webapp}/js/webui/investment/marketClose-dt.js" />
+				<fileset file="${webapp}/js/webui/investment/pendingClose-dt.js" />
+
+				<fileset file="${webapp}/js/webui/trade/modifyTradeCommon-dt.js" />
+				<fileset file="${webapp}/js/webui/trade/tradeGlobalData-core.js" />
+				<fileset file="${webapp}/js/webui/trade/market-dt.js" />
+				<fileset file="${webapp}/js/webui/trade/pendingOrder-dt.js" />
+					
+				<fileset file="${webapp}/js/webui/trade/tradeCommon-dt.js" />
+				<fileset file="${webapp}/js/webui/trade/tradeGlobalData-core.js" />
+				<fileset file="${webapp}/js/webui/trade/market-dt.js" />
+				<fileset file="${webapp}/js/webui/trade/pendingOrder-dt.js" />
+				<fileset file="${webapp}/js/webui/end.js" />
+			</path>
+	    </foreach> 
+		<echo message="Minimizing JS ${webuiJS}/all-dt-ie8.js"/> 
+	    <java jar="anttask/yuicompressor-2.4.8.jar" fork="true">
+	    	<arg value="${webuiJS}/all-dt-ie8.js" />
+	        <arg value="-o" />
+	    	<arg value="'.js$:.js'" />
+	    </java>
+		
+		<copy file="${webuiJS}/all-dt-ie8.js" tofile="${webapp}/js/webui/all-dt-ie8.js" />
+		
+		
+		<!-- build all-mb.js -->
+		<delete file="${webuiJS}/all-mb.js" />
+		<foreach target="loopjs-mb" param="loopjs.param">
+			<path id="jspath">
+				
+				<fileset file="${webapp}/js/webui/news/news-mb.js" />
+				<!-- core -->
+				<fileset file="${webapp}/js/webui/comm/listener-core.js" />
+				<fileset file="${webapp}/js/webui/comm/common-core.js" />
+				<fileset file="${webapp}/js/webui/comm/logger-core.js" />
+				<fileset file="${webapp}/js/webui/comm/globalData-core.js" />
+				<fileset file="${webapp}/js/webui/comm/socketLogin-core.js" />
+				<fileset file="${webapp}/js/webui/comm/util-core.js" />
+				<!-- 報價 -->
+				<fileset file="${webapp}/js/webui/quotation/Tick-core.js" />
+				<!-- 校驗  -->
+				<fileset file="${webapp}/js/webui/investment/Validator-core.js" />
+				<!-- 賬戶倉位  -->
+				<fileset file="${webapp}/js/webui/investment/AccountPositions-core.js" />
+				<!-- 賬戶匯總 -->
+				<fileset file="${webapp}/js/webui/investment/AccountSummary-core.js" />
+				<!-- 賬戶資金模塊 -->
+				<fileset file="${webapp}/js/webui/accountInfo/accountBaseInfo-core.js" />
+				<!-- 當日委託 -->
+				<fileset file="${webapp}/js/webui/investment/PendingOrders-core.js" />
+				<!--實時動態  -->
+				<fileset file="${webapp}/js/webui/investment/DynamicUpdates-core.js" />
+				<!-- 格子報價 -->
+				<fileset file="${webapp}/js/webui/quotation/Tick2Box-mb.js" />
+				<!-- 列表報價 -->
+				<fileset file="${webapp}/js/webui/quotation/Tick2List-mb.js" />
+				<!-- 賬戶倉位  -->
+				<fileset file="${webapp}/js/webui/investment/AccountPositions-mb.js" />
+				<!-- 賬戶匯總 -->
+				<fileset file="${webapp}/js/webui/investment/AccountSummary-mb.js" />
+				<!-- 賬戶資金模塊 -->
+				<fileset file="${webapp}/js/webui/accountInfo/accountBaseInfo-mb.js" />
+				<fileset file="${webapp}/js/webui/trade/tradeCommon-mb.js" />
+				<!-- 已平倉部位 -->
+				<fileset file="${webapp}/js/webui/investment/ClosedPosition-mb.js" />
+				<!-- 當日委託 -->
+				<fileset file="${webapp}/js/webui/investment/PendingOrders-mb.js" />
+				<!--實時動態  -->
+				<fileset file="${webapp}/js/webui/investment/DynamicUpdates-mb.js" />
+				<!--System Time -->
+				<fileset file="${webapp}/js/webui/investment/SystemTime-mb.js" />
+				<fileset file="${webapp}/js/webui/investment/SystemConnection-mb.js" />
+				<fileset file="${webapp}/js/webui/quotation/quotationGTS-mb.js" />
+				<fileset file="${webapp}/js/webui/report/report-mb.js" />
+				
+				<fileset file="${webapp}/js/webui/bulletin/bulletin-mb.js" />
+
+				<fileset file="${webapp}/js/webui/chart/Chart-mb.js" />
+
+				<fileset file="${webapp}/js/webui/investment/closeCommon-mb.js" />
+				<fileset file="${webapp}/js/webui/investment/marketClose-mb.js" />
+				<fileset file="${webapp}/js/webui/investment/pendingClose-mb.js" />
+
+				<fileset file="${webapp}/js/webui/trade/modifyTradeCommon-mb.js" />
+				<fileset file="${webapp}/js/webui/trade/tradeGlobalData-core.js" />
+				<fileset file="${webapp}/js/webui/trade/market-mb.js" />
+				<fileset file="${webapp}/js/webui/trade/pendingOrder-mb.js" />
+				<fileset file="${webapp}/js/webui/trade/tradeCommon-mb.js" />
+				<fileset file="${webapp}/js/webui/comm/index-mb.js" />
+			</path>
+	   </foreach> 
+		<echo message="Minimizing JS ${webuiJS}/all-mb.js"/> 
+	    <java jar="anttask/yuicompressor-2.4.8.jar" fork="true">
+	    	<arg value="${webuiJS}/all-mb.js" />
+	        <arg value="-o" />
+	    	<arg value="'.js$:.js'" />
+	    </java>
+		<copy file="${webuiJS}/all-mb.js" tofile="${webapp}/js/webui/all-mb.js" />
+		
+	</target>   
+	
+	<target name="loopjs-dt" >
+		<echo message="Combile ${loopjs.param}"/> 
+	    <java jar="anttask/AppendFile.jar" fork="true">
+	        <arg value="${loopjs.param}" /> 
+	        <arg value="${webuiJS}/all-dt.js" />
+	    </java>
+	</target>
+	
+	<target name="loopjs-mb" >
+		<echo message="Combile ${loopjs.param}"/> 
+	    <java jar="anttask/AppendFile.jar" fork="true">
+	        <arg value="${loopjs.param}" /> 
+	        <arg value="${webuiJS}/all-mb.js" />
+	    </java>
+	</target>
+	
+	<target name="dist" depends="compile" description="generate the war distribution">	
+		<war destfile="${dist}/${base.name}.war" webxml="${webapp}/WEB-INF/web.xml" update="true" >
+			<fileset dir="${webapp}" >
+				<exclude name="WEB-INF/classes/"/>
+<!-- 				<exclude name="js/webui/"/> -->
+			</fileset>
+			<fileset dir="${buildJS}" />
+			<classes dir="build" />
+		</war>
+	</target>
+
+	<target name="clean" description="clean up">
+		<delete dir="${build}" />
+		<delete dir="${buildJS}" />
+		<delete dir="${dist}" />
+		<delete dir="${config.path}" />
+	</target>
+	
+	<target name="deploy" description="deploy">
+		<delete dir="${webpath}/${base.name}" />
+	
+		<echo>deploy war. ${dist}/${base.name}.war</echo>
+		<copy file="${dist}/${base.name}.war" tofile="${webpath}/${base.name}.war" overwrite="true"/>
+		
+		<echo>clear cache. ${tomcat}/work/Catalina/localhost/${base.name}</echo>
+		<delete dir="${tomcat}/work/Catalina/localhost/${base.name}"/>
+	</target>	
+	
+    <target name="kill" description="kill tomcat process">
+    	<echo>Try to kill tomcat process ${tomcat}</echo>
+        <exec executable="/bin/sh">
+        	<arg value="killTomcat.sh"/>
+        	<arg value="${tomcat}/"/>
+        </exec>
+    </target>
+	
+	<target name="stop" description="stop server">
+		<exec executable="${tomcat}/bin/shutdown.sh">
+			<arg value="-force"/>	
+		</exec>
+	</target>
+	
+	<target name="start" description="start server">
+		<exec executable="${tomcat}/bin/startup.sh">
+		</exec>
+	</target>
+	
+</project>
+
